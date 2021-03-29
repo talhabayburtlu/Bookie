@@ -1,6 +1,5 @@
 package com.swe.bookie.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "User")
+@Table(name = "user", schema = "public")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +24,7 @@ public class User {
     @Email
     private String email;
     private String password;
+    private String phone;
 
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
@@ -36,13 +36,9 @@ public class User {
     @OneToMany(mappedBy = "receiver")
     private List<Comment> receivedComments;
 
-    @JsonIgnore()
-    @OneToMany(mappedBy = "user")
-    private List<Token> tokens;
-
     @ManyToMany()
     @JoinTable(
-            name = "User_Book",
+            name = "user_book",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id")
     )
