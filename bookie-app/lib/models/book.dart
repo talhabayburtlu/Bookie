@@ -18,6 +18,18 @@ class Book {
       this.imageSmallThumbnailLink,
       this.imageThumbnailLink});
 
+  const Book.mocked(
+      {this.id = "0",
+      this.title = "Test",
+      this.subtitle = "Test subtitle",
+      this.author = "author",
+      this.isbn = "123",
+      this.description = "description",
+      this.imageThumbnailLink =
+          "https://nalport.com/image/cache/catalog/kitap/hayvan-ciftligi-(yeni-kapak)---george-orwell-img-550x550.png",
+      this.imageSmallThumbnailLink =
+          "https://nalport.com/image/cache/catalog/kitap/hayvan-ciftligi-(yeni-kapak)---george-orwell-img-550x550.png"});
+
   static Book fromJson(Map<String, dynamic> map) {
     if (map == null) {
       return null;

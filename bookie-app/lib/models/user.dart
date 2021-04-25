@@ -9,8 +9,8 @@ class User {
 
   User({this.name, this.email, this.phone, this.address});
 
-  User.mocked({
-    this.name = "test",
+  const User.mocked({
+    this.name = "Tester Tester",
     this.email = "test@test.com",
     this.phone = "123",
     this.address = const Address.mocked(),
