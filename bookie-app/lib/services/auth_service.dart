@@ -15,7 +15,7 @@ class AuthService {
   Future<bool> login({String email, String password}) async {
     try {
       await Future.delayed(Duration(seconds: 2));
-      _user = User(name: "test", surname: "test");
+      _user = User.mocked();
       return true;
     } catch (e) {
       print('AuthService.login e: $e');
