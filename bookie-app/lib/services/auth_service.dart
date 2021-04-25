@@ -12,11 +12,25 @@ class AuthService {
     return _user != null;
   }
 
-  Future<User> login({String email, String password}) async {
+  Future<bool> login({String email, String password}) async {
     try {
-      return User(name: "TestName", surname: "TestSurname");
+      await Future.delayed(Duration(seconds: 2));
+      _user = User(name: "test", surname: "test");
+      return true;
     } catch (e) {
-      throw Exception();
+      print('AuthService.login e: $e');
+      return false;
+    }
+  }
+
+  Future<bool> register({String email, String password}) async {
+    try {
+      await Future.delayed(Duration(seconds: 2));
+
+      return true;
+    } catch (e) {
+      print('AuthService.register e: $e');
+      return false;
     }
   }
 }

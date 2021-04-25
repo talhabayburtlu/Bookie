@@ -8,7 +8,7 @@ class SplashViewModel extends FutureViewModel {
 
   Future waitAndGoHome() async {
     await Future.delayed(Duration(seconds: 2));
-    _navigationService.pushNamedAndRemoveUntil(Routes.homeView);
+    _navigationService.pushNamedAndRemoveUntil(Routes.loginView);
   }
 
   @override
