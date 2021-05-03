@@ -3,7 +3,7 @@ package com.swe.bookie.mapper;
 import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.RegisterDTO;
 import com.swe.bookie.lib.resource.RegisterResource;
-import com.swe.bookie.service.AddressService;
+import com.swe.bookie.service.abstracts.AddressService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

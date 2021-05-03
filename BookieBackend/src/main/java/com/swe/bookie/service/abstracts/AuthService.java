@@ -1,4 +1,4 @@
-package com.swe.bookie.service;
+package com.swe.bookie.service.abstracts;
 
 import com.swe.bookie.lib.dto.LoginDTO;
 import com.swe.bookie.lib.dto.RegisterDTO;

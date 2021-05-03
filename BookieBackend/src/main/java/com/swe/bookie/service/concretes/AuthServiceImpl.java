@@ -1,4 +1,4 @@
-package com.swe.bookie.service;
+package com.swe.bookie.service.concretes;
 
 import com.swe.bookie.config.security.JwtUtil;
 import com.swe.bookie.entity.User;
@@ -7,6 +7,8 @@ import com.swe.bookie.lib.dto.RegisterDTO;
 import com.swe.bookie.lib.resource.LoginResource;
 import com.swe.bookie.lib.resource.RegisterResource;
 import com.swe.bookie.mapper.RegisterMapper;
+import com.swe.bookie.service.abstracts.AuthService;
+import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -4,7 +4,7 @@ import com.swe.bookie.lib.dto.LoginDTO;
 import com.swe.bookie.lib.dto.RegisterDTO;
 import com.swe.bookie.lib.resource.LoginResource;
 import com.swe.bookie.lib.resource.RegisterResource;
-import com.swe.bookie.service.AuthService;
+import com.swe.bookie.service.abstracts.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
