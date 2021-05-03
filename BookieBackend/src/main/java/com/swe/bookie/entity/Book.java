@@ -31,7 +31,7 @@ public class Book {
     private String description;
 
     @JsonIgnore
-    @ManyToMany(mappedBy = "books")
-    private List<User> users;
+    @OneToMany(mappedBy = "book")
+    private List<Post> posts;
 
 }

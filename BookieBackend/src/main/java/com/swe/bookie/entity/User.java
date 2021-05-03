@@ -27,16 +27,6 @@ public class User {
     @OneToMany(mappedBy = "sender")
     private List<Comment> sentComments;
 
-    @OneToMany(mappedBy = "receiver")
-    private List<Comment> receivedComments;
-
-    @ManyToMany()
-    @JoinTable(
-            name = "user_book",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-    private List<Book> books;
-
-
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 }
