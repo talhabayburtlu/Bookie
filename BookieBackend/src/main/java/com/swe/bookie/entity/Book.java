@@ -1,6 +1,5 @@
 package com.swe.bookie.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.ISBN;
@@ -17,7 +16,7 @@ import javax.persistence.Table;
 public class Book {
 
     @Id
-    @JsonProperty("id")
+    @Column(name = "id", unique = true, nullable = false)
     private String id;
     @Column(name = "title")
     private String title;

@@ -12,4 +12,7 @@ public interface BookService {
     List<Book> getAllById(List<String> ids);
 
     List<Book> searchForBooks(String title) throws URISyntaxException, IOException;
+
+    Book createBook(String id) throws URISyntaxException, IOException;
+
 }

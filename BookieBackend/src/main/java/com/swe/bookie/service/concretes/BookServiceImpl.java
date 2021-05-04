@@ -56,39 +56,58 @@ public class BookServiceImpl implements BookService {
         ArrayList<LinkedHashMap<String, Object>> items = (ArrayList<LinkedHashMap<String, Object>>) response.get("items");
 
         ArrayList<Book> books = items != null ? items.stream().map(item -> {
-            // Retrieving book related information if exist.
-            String id = (String) item.get("id");
-            LinkedHashMap<String, Object> volumeInfo = (LinkedHashMap<String, Object>) item.get("volumeInfo");
-            String returnedTitle = (String) volumeInfo.get("title");
-            String returnedSubtitle = (String) volumeInfo.get("subtitle");
-            String description = (String) volumeInfo.get("description");
-
-            // Retrieving authors of book if exist.
-            String author = null;
-            ArrayList<String> authors = (ArrayList<String>) volumeInfo.get("authors");
-            if (authors != null) {
-                author = String.join(", ", authors);
-            }
-
-            // Retrieving isbn of book if exist.
-            String isbn13 = null;
-            ArrayList<LinkedHashMap<String, Object>> isbns = (ArrayList<LinkedHashMap<String, Object>>) volumeInfo.get("industryIdentifiers");
-            if (isbns != null) {
-                isbn13 = (String) isbns.get(0).get("identifier");
-            }
-
-            // Retrieving images of books if exist.
-            String smallThumbnail = null, thumbnail = null;
-            LinkedHashMap<String, Object> imageLinks = (LinkedHashMap<String, Object>) volumeInfo.get("imageLinks");
-            if (imageLinks != null) {
-                smallThumbnail = (String) imageLinks.get("smallThumbnail");
-                thumbnail = (String) imageLinks.get("thumbnail");
-            }
-
-            // Returning books with retrieved information.
-            return new Book(id, returnedTitle, returnedSubtitle, author, isbn13, smallThumbnail, thumbnail, description);
+            return extractBookFromInformation(item);
         }).collect(Collectors.toCollection(ArrayList::new)) : null;
 
         return books;
+    }
+
+    public Book createBook(String id) throws URISyntaxException, IOException { // Creates book
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+
+        URIBuilder builder = new URIBuilder(url + "/" + id);
+
+        HttpGet httpget = new HttpGet(builder.build().toString());
+        HttpResponse httpresponse = httpclient.execute(httpget);
+
+        Map<String, Object> response = objectMapper.readValue(httpresponse.getEntity().getContent(), Map.class);
+
+        Book book = extractBookFromInformation(response);
+        book.setId(id);
+        return bookRepository.save(book);
+    }
+
+    private Book extractBookFromInformation(Map<String, Object> item) {
+        // Retrieving book related information if exist.
+        String id = (String) item.get("id");
+        LinkedHashMap<String, Object> volumeInfo = (LinkedHashMap<String, Object>) item.get("volumeInfo");
+        String returnedTitle = (String) volumeInfo.get("title");
+        String returnedSubtitle = (String) volumeInfo.get("subtitle");
+        String description = (String) volumeInfo.get("description");
+
+        // Retrieving authors of book if exist.
+        String author = null;
+        ArrayList<String> authors = (ArrayList<String>) volumeInfo.get("authors");
+        if (authors != null) {
+            author = String.join(", ", authors);
+        }
+
+        // Retrieving isbn of book if exist.
+        String isbn13 = null;
+        ArrayList<LinkedHashMap<String, Object>> isbns = (ArrayList<LinkedHashMap<String, Object>>) volumeInfo.get("industryIdentifiers");
+        if (isbns != null) {
+            isbn13 = (String) isbns.get(0).get("identifier");
+        }
+
+        // Retrieving images of books if exist.
+        String smallThumbnail = null, thumbnail = null;
+        LinkedHashMap<String, Object> imageLinks = (LinkedHashMap<String, Object>) volumeInfo.get("imageLinks");
+        if (imageLinks != null) {
+            smallThumbnail = (String) imageLinks.get("smallThumbnail");
+            thumbnail = (String) imageLinks.get("thumbnail");
+        }
+
+        // Returning books with retrieved information.
+        return new Book(id, returnedTitle, returnedSubtitle, author, isbn13, smallThumbnail, thumbnail, description);
     }
 }

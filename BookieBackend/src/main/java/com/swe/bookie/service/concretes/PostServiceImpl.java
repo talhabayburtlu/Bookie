@@ -25,6 +25,7 @@ public class PostServiceImpl implements PostService {
         Post userBookToAdd = new Post();
         userBookToAdd.setUserId(userId);
         userBookToAdd.setBookId(bookId);
+        userBookToAdd.setStatus("Available");
         return postRepository.save(userBookToAdd);
     }
 

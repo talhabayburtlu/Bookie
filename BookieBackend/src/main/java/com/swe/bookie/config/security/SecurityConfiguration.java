@@ -44,7 +44,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/auth/login/**",
                 "/auth/register/**")
                 .permitAll()
-                .antMatchers("/book/**").hasRole("USER")
+                .antMatchers(
+                        "/book/**",
+                        "/user/**"
+                ).hasRole("USER")
                 .anyRequest().hasRole("ADMIN")
                 .and()
                 .sessionManagement()
