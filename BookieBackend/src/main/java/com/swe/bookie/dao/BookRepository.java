@@ -9,5 +9,6 @@ import java.util.List;
 @Component
 public interface BookRepository extends JpaRepository<Book, Integer> {
     Book getById(String id);
-    List<Book> getAllById(List<String> ids);
+
+    List<Book> getAllByIdIn(List<String> ids);
 }

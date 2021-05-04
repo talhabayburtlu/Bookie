@@ -1,6 +1,6 @@
 package com.swe.bookie.entity;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -27,6 +27,6 @@ public class User {
     @OneToMany(mappedBy = "sender")
     private List<Comment> sentComments;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "userId")
     private List<Post> posts;
 }

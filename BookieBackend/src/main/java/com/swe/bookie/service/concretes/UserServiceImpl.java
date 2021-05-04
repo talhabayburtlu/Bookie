@@ -2,8 +2,8 @@ package com.swe.bookie.service.concretes;
 
 import com.swe.bookie.dao.UserRepository;
 import com.swe.bookie.entity.Book;
+import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
-import com.swe.bookie.entity.UserBook;
 import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserBookServiceImpl userBookService;
+    private PostServiceImpl postService;
 
 
     @Override
@@ -38,18 +38,18 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserBook addBookToUser(String bookId, int userId) {
-        return userBookService.add(bookId, userId);
+    public Post addBookToUser(String bookId, int userId) {
+        return postService.add(bookId, userId);
     }
 
     @Override
-    public UserBook removeBookFromUser(String bookId, int userId) {
-        return userBookService.delete(bookId, userId);
+    public Post removeBookFromUser(String bookId, int userId) {
+        return postService.delete(bookId, userId);
     }
 
     @Override
     public List<Book> getUserBooksByUserId(int userId) {
-        return userBookService.getBooksByUserId(userId);
+        return postService.getBooksByUserId(userId);
     }
 
 }

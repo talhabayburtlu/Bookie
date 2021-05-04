@@ -1,11 +1,12 @@
 package com.swe.bookie.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Data;
 import org.hibernate.validator.constraints.ISBN;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Data
 @Entity
@@ -29,9 +30,5 @@ public class Book {
     private String imageThumbnailLink;
     @Column(name = "description")
     private String description;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "book")
-    private List<Post> posts;
 
 }
