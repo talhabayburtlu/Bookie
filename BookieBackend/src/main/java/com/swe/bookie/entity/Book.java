@@ -1,5 +1,7 @@
 package com.swe.bookie.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.hibernate.validator.constraints.ISBN;
 
@@ -8,12 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@AllArgsConstructor
 @Data
 @Entity
 @Table(name = "book", schema = "public")
 public class Book {
 
     @Id
+    @JsonProperty("id")
     private String id;
     @Column(name = "title")
     private String title;
@@ -30,5 +34,8 @@ public class Book {
     private String imageThumbnailLink;
     @Column(name = "description")
     private String description;
+
+    public Book() {
+    }
 
 }

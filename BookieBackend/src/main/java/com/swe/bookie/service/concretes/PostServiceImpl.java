@@ -3,6 +3,7 @@ package com.swe.bookie.service.concretes;
 import com.swe.bookie.dao.PostRepository;
 import com.swe.bookie.entity.Book;
 import com.swe.bookie.entity.Post;
+import com.swe.bookie.service.abstracts.BookService;
 import com.swe.bookie.service.abstracts.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public class PostServiceImpl implements PostService {
     private PostRepository postRepository;
 
     @Autowired
-    private BookServiceImpl bookService;
+    private BookService bookService;
 
     @Override
     public Post add(String bookId, int userId) {
