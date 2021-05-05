@@ -8,7 +8,7 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post getByBookIdAndUserId(String bookId, int userId);
 
-    Post getById(String id);
+    Post getById(int id);
 
     List<Post> getAllByUserId(int userId);
 

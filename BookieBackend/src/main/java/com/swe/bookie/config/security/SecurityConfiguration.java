@@ -46,7 +46,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers(
                         "/book/**",
-                        "/user/**"
+                        "/user/**",
+                        "/post/**"
                 ).hasRole("USER")
                 .anyRequest().hasRole("ADMIN")
                 .and()

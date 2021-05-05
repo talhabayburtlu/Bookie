@@ -12,11 +12,13 @@ public interface PostService {
 
     Post delete(String bookId, int userId);
 
-    Post getById(String id);
+    Post getById(int id);
 
     List<Book> getBooksByUserId(int userId);
 
-    Comment toComment(User sender, String postId, String description);
+    Comment toComment(User sender, int postId, String description);
 
-    List<Comment> getAllByPostId(String postId);
+    List<Comment> getAllByPostId(int postId);
+
+    Post updatePostStatus(int postId, String status, User user);
 }

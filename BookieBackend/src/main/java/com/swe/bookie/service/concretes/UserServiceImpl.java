@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Comment toComment(int userId, String postId, String description){
-        return postService.toComment(userRepository.getById(userId),postId,description);
+    public Comment toComment(int userId, int postId, String description) {
+        return postService.toComment(userRepository.getById(userId), postId, description);
     }
 }

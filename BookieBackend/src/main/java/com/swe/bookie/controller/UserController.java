@@ -46,7 +46,7 @@ public class UserController {
     }
 
     @PostMapping("/toComment")
-    Comment toComment(@AuthenticationPrincipal User user, String postId, String description ){
-        return userService.toComment(user.getId(),postId,description);
+    Comment toComment(@AuthenticationPrincipal User user, int postId, String description) {
+        return userService.toComment(user.getId(), postId, description);
     }
 }

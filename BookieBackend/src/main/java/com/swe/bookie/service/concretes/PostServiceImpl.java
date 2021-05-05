@@ -26,7 +26,7 @@ public class PostServiceImpl implements PostService {
     private CommentServiceImpl commentService;
 
     @Override
-    public Post getById(String id) {
+    public Post getById(int id) {
         return postRepository.getById(id);
     }
 
@@ -53,12 +53,25 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public Comment toComment(User sender, String postId, String description){
-       return commentService.add(sender, postRepository.getById(postId), description);
+    public Comment toComment(User sender, int postId, String description) {
+        return commentService.add(sender, postRepository.getById(postId), description);
     }
 
     @Override
-    public List<Comment> getAllByPostId(String postId){
+    public List<Comment> getAllByPostId(int postId) {
         return commentService.getAllByPost(postRepository.getById(postId));
     }
+
+    @Override
+    public Post updatePostStatus(int postId, String status, User owner) {
+        Post post = postRepository.getById(postId);
+
+        if (post.getUserId() != owner.getId())
+            throw new RuntimeException("You are not owner of this post.");
+
+        post.setStatus(status);
+        return postRepository.save(post);
+    }
+
+
 }

@@ -20,5 +20,5 @@ public interface UserService {
 
     List<Book> getUserBooksByUserId(int userId);
 
-    Comment toComment(int userId, String postId, String description);
+    Comment toComment(int userId, int postId, String description);
 }
