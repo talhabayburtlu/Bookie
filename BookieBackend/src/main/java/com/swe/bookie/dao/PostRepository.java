@@ -8,6 +8,8 @@ import java.util.List;
 public interface PostRepository extends JpaRepository<Post, Integer> {
     Post getByBookIdAndUserId(String bookId, int userId);
 
+    Post getById(String id);
+
     List<Post> getAllByUserId(int userId);
 
     Post deleteByBookIdAndUserId(String bookId, int userId);

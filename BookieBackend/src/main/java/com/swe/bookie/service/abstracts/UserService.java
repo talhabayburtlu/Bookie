@@ -1,6 +1,7 @@
 package com.swe.bookie.service.abstracts;
 
 import com.swe.bookie.entity.Book;
+import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
 
@@ -18,4 +19,6 @@ public interface UserService {
     Post removeBookFromUser(String bookId, int userId);
 
     List<Book> getUserBooksByUserId(int userId);
+
+    Comment toComment(int userId, String postId, String description);
 }

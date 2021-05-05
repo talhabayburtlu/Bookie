@@ -2,6 +2,7 @@ package com.swe.bookie.service.concretes;
 
 import com.swe.bookie.dao.UserRepository;
 import com.swe.bookie.entity.Book;
+import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
 import com.swe.bookie.service.abstracts.UserService;
@@ -52,4 +53,9 @@ public class UserServiceImpl implements UserService {
         return postService.getBooksByUserId(userId);
     }
 
+
+    @Override
+    public Comment toComment(int userId, String postId, String description){
+        return postService.toComment(userRepository.getById(userId),postId,description);
+    }
 }
