@@ -21,4 +21,8 @@ public interface UserService {
     List<Book> getUserBooksByUserId(int userId);
 
     Comment toComment(int userId, int postId, String description);
+
+    User getByEmail(String email);
+
+    Comment deleteComment(int userId, int commentId);
 }

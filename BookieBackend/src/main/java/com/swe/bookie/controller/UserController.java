@@ -4,6 +4,7 @@ import com.swe.bookie.entity.Book;
 import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
+import com.swe.bookie.service.abstracts.AuthService;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.lib.resource.UserResource;
@@ -24,12 +25,15 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
+
     @Autowired
     private UserService userService;
 
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private AuthService authService;
     @Autowired
     private UserMapper userMapper;
 
@@ -38,28 +42,33 @@ public class UserController {
 
 
     @PostMapping("/addBook/{userId}/{bookId}")
-    public Post addBook(@AuthenticationPrincipal User user, @PathVariable(value = "bookId") String bookId) throws IOException, URISyntaxException {
+    public Post addBook(@PathVariable(value = "bookId") String bookId) throws IOException, URISyntaxException {
         Book book = bookService.getById(bookId);
         if (book == null) { // If book doesn't exist in database , create from Google Books and store in database.
             bookService.createBook(bookId);
         }
 
-        return userService.addBookToUser(bookId, user.getId());
+        return userService.addBookToUser(bookId, authService.getAuthenticatedUser().getId());
     }
 
-    @DeleteMapping("/deleteBook//{bookId}")
-    public Post removeBook(@AuthenticationPrincipal User user, @PathVariable(value = "bookId") String bookId) {
-        return userService.removeBookFromUser(bookId, user.getId());
+    @DeleteMapping("/deleteBook/{bookId}")
+    public Post removeBook(@PathVariable(value = "bookId") String bookId) {
+        return userService.removeBookFromUser(bookId, authService.getAuthenticatedUser().getId());
     }
 
     @GetMapping("/getBooks")
-    List<Book> getBooksByUserId(@AuthenticationPrincipal User user) {
-        return userService.getUserBooksByUserId(user.getId());
+    List<Book> getBooks(){
+        return userService.getUserBooksByUserId(authService.getAuthenticatedUser().getId());
     }
 
     @PostMapping("/toComment")
-    Comment toComment(@AuthenticationPrincipal User user, int postId, String description) {
-        return userService.toComment(user.getId(), postId, description);
+    Comment toComment(int postId, String description) {
+        return userService.toComment(authService.getAuthenticatedUser().getId(), postId, description);
+    }
+
+    @DeleteMapping("/deleteComment/{commentId}")
+    Comment deleteComment(@PathVariable(value = "commentId") int commentId){
+        return userService.deleteComment(authService.getAuthenticatedUser().getId(), commentId);
     }
 
     @GetMapping("/me")

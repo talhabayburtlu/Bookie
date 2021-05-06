@@ -5,6 +5,8 @@ import com.swe.bookie.entity.Book;
 import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
+import com.swe.bookie.service.abstracts.CommentService;
+import com.swe.bookie.service.abstracts.PostService;
 import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,10 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private PostServiceImpl postService;
+    private PostService postService;
+
+    @Autowired
+    private CommentService commentService;
 
 
     @Override
@@ -30,6 +35,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(RuntimeException::new);
+    }
+
+    @Override
+    public User getByEmail(String email){
+        return  userRepository.getByEmail(email);
     }
 
     @Override
@@ -58,4 +68,11 @@ public class UserServiceImpl implements UserService {
     public Comment toComment(int userId, int postId, String description) {
         return postService.toComment(userRepository.getById(userId), postId, description);
     }
+
+    @Override
+    public Comment deleteComment(int userId, int commentId){
+        return commentService.delete(userRepository.getById(userId), commentId);
+    }
+
+
 }

@@ -1,11 +1,13 @@
 package com.swe.bookie.controller;
 
+import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.LoginDTO;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.LoginResource;
 import com.swe.bookie.lib.resource.UserResource;
 import com.swe.bookie.service.abstracts.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final AuthService authService;
+
 
     @Autowired
     public AuthController(AuthService authService) {

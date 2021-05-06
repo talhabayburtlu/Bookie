@@ -44,8 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/auth/login/**",
                 "/auth/register/**")
                 .permitAll()
-                .antMatchers(
-                        "/book/**",
+                .antMatchers("/book/**",
                         "/user/**",
                         "/post/**"
                 ).hasRole("USER")

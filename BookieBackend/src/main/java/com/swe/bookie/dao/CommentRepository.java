@@ -10,4 +10,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     List<Comment> getAllByPost(Post post);
 
     void deleteById(int id);
+
+    Comment getById(int id);
 }
