@@ -5,6 +5,7 @@ import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.UserDTO;
+import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.lib.resource.UserResource;
 import com.swe.bookie.mapper.UserMapper;
 import com.swe.bookie.service.abstracts.BookService;
@@ -70,6 +71,12 @@ public class UserController {
         return userMapper.toResource(user);
     }
 
+    @GetMapping("/{userId}")
+    public RestrictedUserResource getUserDetails(@PathVariable int userId) {
+        User user = userService.findById(userId);
+        return userMapper.toRestrictedResource(user);
+    }
+
     @PutMapping("/me")
     public UserResource updateMyDetails(@RequestBody UserDTO userDTO) {
         org.springframework.security.core.userdetails.User securityUser = // Getting authenticated user details.
@@ -82,5 +89,6 @@ public class UserController {
         userService.save(updatedUser);
         return userMapper.toResource(updatedUser);
     }
+
 
 }

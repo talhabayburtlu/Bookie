@@ -2,6 +2,7 @@ package com.swe.bookie.mapper;
 
 import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.UserDTO;
+import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.lib.resource.UserResource;
 import com.swe.bookie.service.abstracts.AddressService;
 import com.swe.bookie.service.abstracts.UserService;
@@ -41,6 +42,12 @@ public class UserMapper {
         UserResource userResource = modelMapper.map(user, UserResource.class);
         userResource.setCity(user.getAddress().getCity());
         return userResource;
+    }
+
+    public RestrictedUserResource toRestrictedResource(User user) {
+        RestrictedUserResource restrictedUserResource = modelMapper.map(user, RestrictedUserResource.class);
+        restrictedUserResource.setCity(user.getAddress().getCity());
+        return restrictedUserResource;
     }
 
 }
