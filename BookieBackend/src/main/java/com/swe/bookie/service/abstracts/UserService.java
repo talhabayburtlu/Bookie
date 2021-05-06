@@ -25,4 +25,8 @@ public interface UserService {
     User getByEmail(String email);
 
     Comment deleteComment(int userId, int commentId);
+
+    List<Book> getLibraryByUserId(int userId);
+
+    List<Post> getPostByUserId(int userId);
 }

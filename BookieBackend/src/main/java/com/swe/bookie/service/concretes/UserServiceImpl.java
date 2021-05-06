@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(String email){
-        return  userRepository.getByEmail(email);
+    public User getByEmail(String email) {
+        return userRepository.getByEmail(email);
     }
 
     @Override
@@ -70,9 +70,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Comment deleteComment(int userId, int commentId){
+    public Comment deleteComment(int userId, int commentId) {
         return commentService.delete(userRepository.getById(userId), commentId);
     }
 
+    @Override
+    public List<Post> getPostByUserId(int userId){
+        return postService.getAllPostsByUserId(userId);
+    }
 
+    @Override
+    public List<Book> getLibraryByUserId(int userId) {
+        return postService.getBooksByUserId(userId);
+
+    }
 }

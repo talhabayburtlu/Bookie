@@ -28,6 +28,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder bcryptEncoder;
     private final UserService userService;
     private final UserMapper userMapper;
+    private User authenticatedUser;
 
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager,
@@ -45,6 +46,11 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
+    public User getAuthenticatedUser() {
+        return authenticatedUser;
+    }
+
+    @Override
     public LoginResource login(LoginDTO loginDTO) {
         try {
             // Trying to authenticate with mail and password.
@@ -56,7 +62,7 @@ public class AuthServiceImpl implements AuthService {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDTO.getEmail()); // Loading user details.
         final String jwt = jwtTokenUtil.generateToken(userDetails); // Generating jwt token in order to send it back.
-
+        authenticatedUser = userService.getByEmail(userDetails.getUsername());
         return new LoginResource(jwt);
     }
 
@@ -66,6 +72,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userMapper.toEntity(userDTO);
         user.setPassword(bcryptEncoder.encode(user.getPassword())); // Setting password by encoding it.
         userService.save(user);
+        authenticatedUser = user;
 
         return userMapper.toResource(user);
     }

@@ -15,7 +15,7 @@ public class Address {
     private int id;
     private String city;
 
-    @JsonIgnore()
+    /*@JsonIgnore()
     @OneToMany(mappedBy = "address")
-    private List<User> users;
+    private List<User> users;*/
 }

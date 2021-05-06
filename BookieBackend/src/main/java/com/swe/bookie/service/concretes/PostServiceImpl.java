@@ -46,8 +46,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Book> getBooksByUserId(int userId) {
-        List<Post> userBooks = postRepository.getAllByUserId(userId);
-        List<String> bookIds = userBooks.stream().map(Post::getBookId).collect(Collectors.toList());
+        List<Post> userPosts = postRepository.getAllByUserId(userId);
+        List<String> bookIds = userPosts.stream().map(Post::getBookId).collect(Collectors.toList());
         return bookService.getAllById(bookIds);
     }
 
@@ -60,6 +60,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Comment> getAllByPostId(int postId) {
         return commentService.getAllByPost(postRepository.getById(postId));
+    }
+
+    @Override
+    public List<Post> getAllPostsByUserId(int userId){
+        return postRepository.getAllByUserId(userId);
     }
 
     @Override
