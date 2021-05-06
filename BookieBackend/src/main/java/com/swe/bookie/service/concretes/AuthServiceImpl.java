@@ -3,10 +3,10 @@ package com.swe.bookie.service.concretes;
 import com.swe.bookie.config.security.JwtUtil;
 import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.LoginDTO;
-import com.swe.bookie.lib.dto.RegisterDTO;
+import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.LoginResource;
-import com.swe.bookie.lib.resource.RegisterResource;
-import com.swe.bookie.mapper.RegisterMapper;
+import com.swe.bookie.lib.resource.UserResource;
+import com.swe.bookie.mapper.UserMapper;
 import com.swe.bookie.service.abstracts.AuthService;
 import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +27,7 @@ public class AuthServiceImpl implements AuthService {
     private final JwtUtil jwtTokenUtil;
     private final PasswordEncoder bcryptEncoder;
     private final UserService userService;
-    private final RegisterMapper registerMapper;
+    private final UserMapper userMapper;
 
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager,
@@ -35,13 +35,13 @@ public class AuthServiceImpl implements AuthService {
                            JwtUtil jwtTokenUtil,
                            PasswordEncoder bcryptEncoder,
                            UserService userService,
-                           RegisterMapper registerMapper) {
+                           UserMapper userMapper) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtTokenUtil = jwtTokenUtil;
         this.bcryptEncoder = bcryptEncoder;
         this.userService = userService;
-        this.registerMapper = registerMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -61,13 +61,13 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public RegisterResource register(RegisterDTO registerDTO) {
-        System.out.println(registerDTO);
-        User user = registerMapper.toEntity(registerDTO);
+    public UserResource register(UserDTO userDTO) {
+        System.out.println(userDTO);
+        User user = userMapper.toEntity(userDTO);
         user.setPassword(bcryptEncoder.encode(user.getPassword())); // Setting password by encoding it.
         userService.save(user);
 
-        return registerMapper.toResource(user);
+        return userMapper.toResource(user);
     }
 
 

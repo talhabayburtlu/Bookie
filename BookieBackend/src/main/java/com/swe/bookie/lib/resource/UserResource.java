@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterResource {
+public class UserResource {
     private int id;
     private short age;
     private String fullname;
