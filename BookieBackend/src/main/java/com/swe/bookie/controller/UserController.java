@@ -4,6 +4,7 @@ import com.swe.bookie.entity.Book;
 import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
+import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.service.abstracts.AuthService;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.RestrictedUserResource;
@@ -97,6 +98,12 @@ public class UserController {
 
         userService.save(updatedUser);
         return userMapper.toResource(updatedUser);
+    }
+
+
+    @GetMapping("/getHomepagePosts")
+    public List<HomepagePostResponse> getHomepagePosts(){
+        return userService.getHomepagePostsByUserId(authService.getAuthenticatedUser().getId());
     }
 
 

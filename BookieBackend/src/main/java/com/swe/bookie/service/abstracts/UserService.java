@@ -4,6 +4,7 @@ import com.swe.bookie.entity.Book;
 import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
+import com.swe.bookie.lib.resource.HomepagePostResponse;
 
 import java.util.List;
 
@@ -29,4 +30,8 @@ public interface UserService {
     List<Book> getLibraryByUserId(int userId);
 
     List<Post> getPostByUserId(int userId);
+
+    List<User> getUsersByCity(String city);
+
+    List<HomepagePostResponse> getHomepagePostsByUserId(int userId);
 }

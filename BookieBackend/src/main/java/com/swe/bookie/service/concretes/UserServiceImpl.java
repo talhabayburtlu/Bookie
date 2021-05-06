@@ -1,16 +1,16 @@
 package com.swe.bookie.service.concretes;
 
+import com.swe.bookie.dao.AddressRepository;
 import com.swe.bookie.dao.UserRepository;
-import com.swe.bookie.entity.Book;
-import com.swe.bookie.entity.Comment;
-import com.swe.bookie.entity.Post;
-import com.swe.bookie.entity.User;
+import com.swe.bookie.entity.*;
+import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.service.abstracts.CommentService;
 import com.swe.bookie.service.abstracts.PostService;
 import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +19,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AddressRepository addressRepository;
 
     @Autowired
     private PostService postService;
@@ -75,7 +78,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Post> getPostByUserId(int userId){
+    public List<Post> getPostByUserId(int userId) {
         return postService.getAllPostsByUserId(userId);
     }
 
@@ -83,5 +86,30 @@ public class UserServiceImpl implements UserService {
     public List<Book> getLibraryByUserId(int userId) {
         return postService.getBooksByUserId(userId);
 
+    }
+
+    @Override
+    public List<User> getUsersByCity(String city) {
+        return userRepository.getByAddress_City(city);
+    }
+
+    @Override
+    public List<HomepagePostResponse> getHomepagePostsByUserId(int userId) {
+        List<User> users = getUsersByCity(userRepository.getById(userId).getAddress().getCity());
+
+        List<HomepagePostResponse> homepagePostResponses = new ArrayList<>();
+        for (User user : users) {
+            if (user.getId() == userId)
+                continue;
+
+            List<Book> booksOfCurrentUser = getUserBooksByUserId(userId);
+
+            HomepagePostResponse homepagePostResponse = new HomepagePostResponse();
+            homepagePostResponse.setBooks(booksOfCurrentUser);
+            homepagePostResponse.setUser(user);
+            homepagePostResponses.add(homepagePostResponse);
+
+        }
+        return homepagePostResponses;
     }
 }
