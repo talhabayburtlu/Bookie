@@ -1,13 +1,35 @@
 import 'package:bookie/app/locator.dart';
 import 'package:bookie/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class RegisterViewModel extends BaseViewModel {
   final AuthService _authService = locator<AuthService>();
+  final SnackbarService _snackbarService = locator<SnackbarService>();
 
-  Future<void> register(String email, String password) async {
+  Future<void> register(
+      {String fullName,
+      int age,
+      String phone,
+      String email,
+      String password}) async {
     setBusy(true);
-    await _authService.register();
+
+    final result = await _authService.register(
+        fullName: fullName,
+        phone: phone,
+        email: email,
+        password: password,
+        age: age);
+
+    print('RegisterViewModel.register result is $result');
+    if (!result) {
+      _snackbarService.showSnackbar(message: "Something went wrong!");
+      setBusy(false);
+
+      return;
+    }
+    _snackbarService.showSnackbar(message: "Successful!");
     setBusy(false);
   }
 }
