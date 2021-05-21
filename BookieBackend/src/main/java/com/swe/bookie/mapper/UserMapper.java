@@ -25,6 +25,7 @@ public class UserMapper {
     public User toEntity(UserDTO userDTO) { // Creates new user.
         User user = modelMapper.map(userDTO, User.class);
         user.setAddress(addressService.findById(userDTO.getAddressId()));
+        user.setId(0);
         return user;
     }
 
@@ -41,12 +42,14 @@ public class UserMapper {
     public UserResource toResource(User user) {
         UserResource userResource = modelMapper.map(user, UserResource.class);
         userResource.setCity(user.getAddress().getCity());
+        userResource.setId(user.getId());
         return userResource;
     }
 
     public RestrictedUserResource toRestrictedResource(User user) {
         RestrictedUserResource restrictedUserResource = modelMapper.map(user, RestrictedUserResource.class);
         restrictedUserResource.setCity(user.getAddress().getCity());
+        restrictedUserResource.setId(user.getId());
         return restrictedUserResource;
     }
 
