@@ -46,9 +46,13 @@ class AuthService {
       });
       print('AuthService.register response is $response');
 
-      if (response == null || response.status > 200) {
+      if (response == null) {
         return false;
       }
+      print('AuthService.register response is ${response}');
+      final token = response["loginResource"]["jwtToken"] ?? null;
+      _httpService.setToken(token);
+
       return true;
     } catch (e) {
       print('AuthService.register e: $e');
