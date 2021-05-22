@@ -76,6 +76,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 border: OutlineInputBorder(),
                                 labelText: "Şifre"),
                             controller: _passwordController,
+                            obscureText: true,
                             validator: (val) {
                               if (val.isEmpty) {
                                 return "Please enter a password";

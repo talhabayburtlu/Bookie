@@ -42,6 +42,9 @@ class HttpService {
       );
       /* print(
           "response is $response | ${response.statusCode} | ${response.body}");*/
+      if (response == null || response?.statusCode > 200) {
+        return null;
+      }
       final data = jsonDecode(response.body);
       return data;
     } catch (e) {

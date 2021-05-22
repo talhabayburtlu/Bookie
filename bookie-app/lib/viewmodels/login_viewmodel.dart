@@ -7,13 +7,18 @@ import 'package:stacked_services/stacked_services.dart';
 class LoginViewModel extends BaseViewModel {
   final AuthService _authService = locator<AuthService>();
   final NavigationService _navigationService = locator<NavigationService>();
+  final SnackbarService _snackbarService = locator<SnackbarService>();
 
   Future<bool> login(String email, String password) async {
     setBusy(true);
-    await _authService.login(email: email, password: password);
+    final result = await _authService.login(email: email, password: password);
     setBusy(false);
+    if (result) {
+      _navigationService.clearStackAndShow(Routes.homeView);
+    } else {
+      _snackbarService.showSnackbar(message: "Please try again");
+    }
 
-    _navigationService.clearStackAndShow(Routes.homeView);
     return true;
   }
 

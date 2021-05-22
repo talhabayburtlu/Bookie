@@ -20,8 +20,17 @@ class AuthService {
  */
   Future<bool> login({String email, String password}) async {
     try {
-      await Future.delayed(Duration(seconds: 2));
-      _user = User.mocked();
+      final response = await _httpService.post(path: 'auth/login', body: {
+        "email": email,
+        "password": password,
+      });
+      if (response == null) {
+        return false;
+      }
+
+      print('AuthService.login response is $response');
+      final token = response["jwtToken"] ?? null;
+      _httpService.setToken(token);
       return true;
     } catch (e) {
       print('AuthService.login e: $e');
@@ -44,7 +53,6 @@ class AuthService {
         "phone": phone,
         "addressId": 34
       });
-      print('AuthService.register response is $response');
 
       if (response == null) {
         return false;
@@ -58,5 +66,9 @@ class AuthService {
       print('AuthService.register e: $e');
       return false;
     }
+  }
+
+  void logout() {
+    _httpService.setToken(null);
   }
 }
