@@ -4,6 +4,7 @@ import com.swe.bookie.dao.AddressRepository;
 import com.swe.bookie.dao.UserRepository;
 import com.swe.bookie.entity.*;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
+import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.service.abstracts.CommentService;
 import com.swe.bookie.service.abstracts.PostService;
 import com.swe.bookie.service.abstracts.UserService;
@@ -104,9 +105,19 @@ public class UserServiceImpl implements UserService {
 
             List<Book> booksOfCurrentUser = getUserBooksByUserId(userId);
 
+            if (booksOfCurrentUser == null)
+                continue;
+
             HomepagePostResponse homepagePostResponse = new HomepagePostResponse();
             homepagePostResponse.setBooks(booksOfCurrentUser);
-            homepagePostResponse.setUser(user);
+
+            RestrictedUserResource restrictedUserResource = new RestrictedUserResource();
+            restrictedUserResource.setId(user.getId());
+            restrictedUserResource.setCity(user.getAddress().getCity());
+            restrictedUserResource.setFullname(user.getFullname());
+            restrictedUserResource.setPhone(user.getPhone());
+
+            homepagePostResponse.setRestrictedUserResource(restrictedUserResource);
             homepagePostResponses.add(homepagePostResponse);
 
         }

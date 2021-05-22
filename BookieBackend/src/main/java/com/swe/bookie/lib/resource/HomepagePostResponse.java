@@ -8,6 +8,6 @@ import java.util.List;
 
 @Data
 public class HomepagePostResponse {
-   private User user;
+   private RestrictedUserResource restrictedUserResource;
    private List<Book> books;
 }
