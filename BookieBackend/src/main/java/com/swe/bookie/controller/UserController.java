@@ -4,16 +4,16 @@ import com.swe.bookie.entity.Book;
 import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
-import com.swe.bookie.lib.resource.HomepagePostResponse;
-import com.swe.bookie.service.abstracts.AuthService;
+import com.swe.bookie.lib.dto.CommentDTO;
 import com.swe.bookie.lib.dto.UserDTO;
+import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.lib.resource.UserResource;
 import com.swe.bookie.mapper.UserMapper;
+import com.swe.bookie.service.abstracts.AuthService;
 import com.swe.bookie.service.abstracts.BookService;
 import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +42,7 @@ public class UserController {
     private PasswordEncoder bcryptEncoder;
 
 
-    @PostMapping("/addBook/{userId}/{bookId}")
+    @PostMapping("/addBook/{bookId}")
     public Post addBook(@PathVariable(value = "bookId") String bookId) throws IOException, URISyntaxException {
         Book book = bookService.getById(bookId);
         if (book == null) { // If book doesn't exist in database , create from Google Books and store in database.
@@ -63,8 +63,8 @@ public class UserController {
     }
 
     @PostMapping("/toComment")
-    Comment toComment(int postId, String description) {
-        return userService.toComment(authService.getAuthenticatedUser().getId(), postId, description);
+    Comment toComment(@RequestBody CommentDTO commentDTO) {
+        return userService.toComment(authService.getAuthenticatedUser().getId(), commentDTO.getPostId(), commentDTO.getContent());
     }
 
     @DeleteMapping("/deleteComment/{commentId}")
