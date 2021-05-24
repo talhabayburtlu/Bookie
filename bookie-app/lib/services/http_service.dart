@@ -10,17 +10,21 @@ class HttpService {
 
   String _token;
 
-  Future<dynamic> get({String path, Map<String, dynamic> body}) async {
+  Future<dynamic> get({String path, String queryParams}) async {
     try {
+      if (queryParams != null) {
+        path += queryParams;
+      }
+      Uri uri = Uri.parse(url + path);
+      print('HttpService.get uri: $uri');
       final response = await http.get(
-        Uri.parse(url + path),
+        uri,
         headers: {
           HttpHeaders.contentTypeHeader: "application/json",
           if (_token != null) HttpHeaders.authorizationHeader: "Bearer $_token"
         },
       );
       final data = jsonDecode(response.body);
-      print('HttpService.get : $data');
       return data;
     } catch (e) {
       print('HttpService.get e: $e');

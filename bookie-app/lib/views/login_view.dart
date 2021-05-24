@@ -74,7 +74,10 @@ class LoginView extends StatelessWidget {
                                   _passwordController.text);
                             }
                           },
-                          title: Text("Login"),
+                          title: Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
                           decoration: BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(22)),

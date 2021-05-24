@@ -9,6 +9,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
+import '../views/add_library_view.dart';
 import '../views/home_view.dart';
 import '../views/login_view.dart';
 import '../views/register_view.dart';
@@ -19,11 +20,13 @@ class Routes {
   static const String homeView = '/home-view';
   static const String loginView = '/login-view';
   static const String registerView = '/register-view';
+  static const String addLibraryView = '/add-library-view';
   static const all = <String>{
     splashView,
     homeView,
     loginView,
     registerView,
+    addLibraryView,
   };
 }
 
@@ -35,6 +38,7 @@ class Router extends RouterBase {
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.registerView, page: RegisterView),
+    RouteDef(Routes.addLibraryView, page: AddLibraryView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -60,6 +64,12 @@ class Router extends RouterBase {
     RegisterView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => RegisterView(),
+        settings: data,
+      );
+    },
+    AddLibraryView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => AddLibraryView(),
         settings: data,
       );
     },
