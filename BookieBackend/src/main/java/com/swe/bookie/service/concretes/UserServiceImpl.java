@@ -2,8 +2,13 @@ package com.swe.bookie.service.concretes;
 
 import com.swe.bookie.dao.AddressRepository;
 import com.swe.bookie.dao.UserRepository;
-import com.swe.bookie.entity.*;
+import com.swe.bookie.entity.Book;
+import com.swe.bookie.entity.Comment;
+import com.swe.bookie.entity.Post;
+import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
+import com.swe.bookie.lib.resource.RestrictedUserResource;
+import com.swe.bookie.mapper.UserMapper;
 import com.swe.bookie.service.abstracts.CommentService;
 import com.swe.bookie.service.abstracts.PostService;
 import com.swe.bookie.service.abstracts.UserService;
@@ -16,6 +21,10 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Autowired
     private UserRepository userRepository;
@@ -104,9 +113,15 @@ public class UserServiceImpl implements UserService {
 
             List<Book> booksOfCurrentUser = getUserBooksByUserId(userId);
 
+            if (booksOfCurrentUser.size() == 0)
+                continue;
+
             HomepagePostResponse homepagePostResponse = new HomepagePostResponse();
             homepagePostResponse.setBooks(booksOfCurrentUser);
-            homepagePostResponse.setUser(user);
+
+            RestrictedUserResource restrictedUserResource = userMapper.toRestrictedResource(user);
+
+            homepagePostResponse.setRestrictedUserResource(restrictedUserResource);
             homepagePostResponses.add(homepagePostResponse);
 
         }

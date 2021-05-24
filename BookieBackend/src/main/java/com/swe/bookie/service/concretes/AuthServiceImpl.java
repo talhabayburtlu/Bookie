@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +29,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder bcryptEncoder;
     private final UserService userService;
     private final UserMapper userMapper;
-    private User authenticatedUser;
+
 
     @Autowired
     public AuthServiceImpl(AuthenticationManager authenticationManager,
@@ -47,7 +48,9 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public User getAuthenticatedUser() {
-        return authenticatedUser;
+        org.springframework.security.core.userdetails.User securityUser = // Getting authenticated user details.
+                (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        return userService.findByEmail(securityUser.getUsername()); // Getting authenticated user by using user details.
     }
 
     @Override
@@ -62,7 +65,6 @@ public class AuthServiceImpl implements AuthService {
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDTO.getEmail()); // Loading user details.
         final String jwt = jwtTokenUtil.generateToken(userDetails); // Generating jwt token in order to send it back.
-        authenticatedUser = userService.getByEmail(userDetails.getUsername());
         return new LoginResource(jwt);
     }
 
@@ -72,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
         User user = userMapper.toEntity(userDTO);
         user.setPassword(bcryptEncoder.encode(user.getPassword())); // Setting password by encoding it.
         userService.save(user);
-        authenticatedUser = user;
+
 
         return userMapper.toResource(user);
     }
