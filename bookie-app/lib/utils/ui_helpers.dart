@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+const BOOK_FALLBACK_URL =
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/3/39/Book.svg/875px-Book.svg.png";
+
 const Widget horizontalSpaceTiny = SizedBox(width: 5.0);
 const Widget horizontalSpaceSmall = SizedBox(width: 10.0);
 const Widget horizontalSpaceMedium = SizedBox(width: 25.0);
@@ -25,11 +28,11 @@ double screenWidth(BuildContext context) => MediaQuery.of(context).size.width;
 double screenHeight(BuildContext context) => MediaQuery.of(context).size.height;
 
 double screenHeightFraction(BuildContext context,
-    {int dividedBy = 1, double offsetBy = 0}) =>
+        {int dividedBy = 1, double offsetBy = 0}) =>
     (screenHeight(context) - offsetBy) / dividedBy;
 
 double screenWidthFraction(BuildContext context,
-    {int dividedBy = 1, double offsetBy = 0}) =>
+        {int dividedBy = 1, double offsetBy = 0}) =>
     (screenWidth(context) - offsetBy) / dividedBy;
 
 double halfScreenWidth(BuildContext context) =>
@@ -54,7 +57,7 @@ class SizeConfig {
     );
   }
 
-  static  Widget horizontalSpace(double percentage) {
+  static Widget horizontalSpace(double percentage) {
     return SizedBox(
       width: SizeConfig.blockSizeHorizontal * percentage,
     );

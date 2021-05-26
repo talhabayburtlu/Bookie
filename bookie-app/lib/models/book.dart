@@ -47,6 +47,15 @@ class Book {
           imageThumbnailLink: map["imageThumbnailLink"]);
     } catch (e) {
       print('Book.fromJson e: $e');
+      return null;
     }
   }
+
+  @override
+  bool operator ==(covariant Book other) {
+    return this.id == other.id && this.title == other.title;
+  }
+
+  @override
+  int get hashCode => this.id.hashCode;
 }

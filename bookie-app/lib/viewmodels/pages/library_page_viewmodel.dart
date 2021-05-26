@@ -11,4 +11,6 @@ class LibraryPageViewModel extends FutureViewModel {
   Future futureToRun() async {
     books = await _libraryService.getOwnLibrary();
   }
+
+  void removeFromLibrary(Book book) {}
 }
