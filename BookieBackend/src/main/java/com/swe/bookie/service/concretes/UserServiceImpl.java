@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
             if (user.getId() == userId)
                 continue;
 
-            List<Book> booksOfCurrentUser = getUserBooksByUserId(userId);
+            List<Book> booksOfCurrentUser = getUserBooksByUserId(user.getId());
 
             if (booksOfCurrentUser.size() == 0)
                 continue;
