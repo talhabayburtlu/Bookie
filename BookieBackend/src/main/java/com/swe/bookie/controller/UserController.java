@@ -52,8 +52,8 @@ public class UserController {
         return userService.addBookToUser(bookId, authService.getAuthenticatedUser().getId());
     }
 
-    @DeleteMapping("/deleteBook/{bookId}")
-    public Post removeBook(@PathVariable(value = "bookId") String bookId) {
+    @DeleteMapping("/deleteBook")
+    public Post removeBook(@RequestParam("bookId") String bookId) {
         return userService.removeBookFromUser(bookId, authService.getAuthenticatedUser().getId());
     }
 

@@ -12,6 +12,8 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
     List<Post> getAllByUserId(int userId);
 
+    Post deleteById(int id);
+
     Post deleteByBookIdAndUserId(String bookId, int userId);
 
 }

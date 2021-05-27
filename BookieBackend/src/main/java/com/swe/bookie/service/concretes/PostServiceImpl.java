@@ -41,8 +41,11 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Post delete(String bookId, int userId) {
-        return postRepository.deleteByBookIdAndUserId(bookId, userId);
+        Post post = postRepository.getByBookIdAndUserId(bookId,userId);
+        return postRepository.deleteById(post.getId());
     }
+
+
 
     @Override
     public List<Book> getBooksByUserId(int userId) {
