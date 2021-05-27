@@ -49,12 +49,12 @@ public class UserController {
             bookService.createBook(bookId);
         }
 
-        return userService.addBookToUser(bookId, authService.getAuthenticatedUser().getId());
+        return userService.addBookToUser(bookId, authService.getAuthenticatedUser());
     }
 
     @DeleteMapping("/deleteBook")
     public Post removeBook(@RequestParam("bookId") String bookId) {
-        return userService.removeBookFromUser(bookId, authService.getAuthenticatedUser().getId());
+        return userService.removeBookFromUser(bookId, authService.getAuthenticatedUser());
     }
 
     @GetMapping("/getBooks")

@@ -8,9 +8,9 @@ import com.swe.bookie.entity.User;
 import java.util.List;
 
 public interface PostService {
-    Post add(String bookId, int userId);
+    Post add(String bookId, User user);
 
-    Post delete(String bookId, int userId);
+    Post delete(String bookId, User user);
 
     Post getById(int id);
 

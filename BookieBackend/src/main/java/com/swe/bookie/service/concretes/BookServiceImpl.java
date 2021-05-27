@@ -3,6 +3,7 @@ package com.swe.bookie.service.concretes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.swe.bookie.dao.BookRepository;
 import com.swe.bookie.entity.Book;
+import com.swe.bookie.entity.User;
 import com.swe.bookie.service.abstracts.BookService;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -41,7 +42,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public ArrayList<Book> searchForBooks(String title) throws URISyntaxException, IOException {
+    public ArrayList<Book> searchForBooks(String title, User user) throws URISyntaxException, IOException {
         CloseableHttpClient httpclient = HttpClients.createDefault();
 
         URIBuilder builder = new URIBuilder(url)
@@ -56,7 +57,13 @@ public class BookServiceImpl implements BookService {
         ArrayList<LinkedHashMap<String, Object>> items = (ArrayList<LinkedHashMap<String, Object>>) response.get("items");
 
         ArrayList<Book> books = items != null ? items.stream().map(item -> {
-            return extractBookFromInformation(item);
+            Book book = extractBookFromInformation(item);
+
+            boolean alreadyAdded = user.getPosts().stream().anyMatch(post -> {
+                return post.getBookId().equals(book.getId());
+            });
+
+            return alreadyAdded ? null : book;
         }).collect(Collectors.toCollection(ArrayList::new)) : null;
 
         return books;

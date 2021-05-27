@@ -1,6 +1,7 @@
 package com.swe.bookie.service.abstracts;
 
 import com.swe.bookie.entity.Book;
+import com.swe.bookie.entity.User;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -11,7 +12,7 @@ public interface BookService {
 
     List<Book> getAllById(List<String> ids);
 
-    List<Book> searchForBooks(String title) throws URISyntaxException, IOException;
+    List<Book> searchForBooks(String title, User user) throws URISyntaxException, IOException;
 
     Book createBook(String id) throws URISyntaxException, IOException;
 
