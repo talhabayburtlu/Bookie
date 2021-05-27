@@ -14,6 +14,7 @@ import '../views/home_view.dart';
 import '../views/login_view.dart';
 import '../views/register_view.dart';
 import '../views/splash_view.dart';
+import '../views/update_details_view.dart';
 
 class Routes {
   static const String splashView = '/';
@@ -21,12 +22,14 @@ class Routes {
   static const String loginView = '/login-view';
   static const String registerView = '/register-view';
   static const String addLibraryView = '/add-library-view';
+  static const String updateDetailsView = '/update-details-view';
   static const all = <String>{
     splashView,
     homeView,
     loginView,
     registerView,
     addLibraryView,
+    updateDetailsView,
   };
 }
 
@@ -39,6 +42,7 @@ class Router extends RouterBase {
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.registerView, page: RegisterView),
     RouteDef(Routes.addLibraryView, page: AddLibraryView),
+    RouteDef(Routes.updateDetailsView, page: UpdateDetailsView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -70,6 +74,12 @@ class Router extends RouterBase {
     AddLibraryView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => AddLibraryView(),
+        settings: data,
+      );
+    },
+    UpdateDetailsView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UpdateDetailsView(),
         settings: data,
       );
     },

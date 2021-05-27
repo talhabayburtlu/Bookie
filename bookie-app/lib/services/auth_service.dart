@@ -68,6 +68,19 @@ class AuthService {
     }
   }
 
+  Future<User> getUserDetails() async {
+    try {
+      final res = await _httpService.get(path: "user/me");
+      if (res == null) {
+        return null;
+      }
+      return User.fromJson(res);
+    } catch (e) {
+      print('AuthService.getUserDetails e: $e');
+      return null;
+    }
+  }
+
   void logout() {
     _httpService.setToken(null);
   }

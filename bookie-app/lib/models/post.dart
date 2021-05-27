@@ -27,10 +27,16 @@ class Post {
         books.add(Book.fromJson(bookJson));
       });
 
-      return Post(user: User.fromJson(map["user"]), books: books);
+      return Post(
+          user: User.fromJson(map["restrictedUserResource"]), books: books);
     } catch (e) {
       print('Post.fromJson e: $e');
       return null;
     }
+  }
+
+  @override
+  String toString() {
+    return "User: {${user.toString()}} | Books: ${books.map((e) => e.toString())}]";
   }
 }
