@@ -1,14 +1,28 @@
 import 'package:bookie/app/locator.dart';
 import 'package:bookie/models/book.dart';
 import 'package:injectable/injectable.dart';
+import 'package:stacked/stacked.dart';
 
 import 'http_service.dart';
+import 'package:observable_ish/observable_ish.dart';
 
 @lazySingleton
-class LibraryService {
+class LibraryService with ReactiveServiceMixin {
   final _httpService = locator<HttpService>();
 
-  Future<List<Book>> getOwnLibrary() async {
+  LibraryService() {
+    listenToReactiveValues([_libraryBooks]);
+  }
+
+  RxValue<List<Book>> _libraryBooks = RxValue<List<Book>>(initial: []);
+
+  List<Book> get libraryBooks => _libraryBooks.value;
+
+  void updateLibrary(List<Book> books) {
+    _libraryBooks.value = books;
+  }
+
+  Future<void> getOwnLibrary() async {
     try {
       final List<dynamic> res = await _httpService.get(path: "user/getBooks");
       if (res == null) {
@@ -19,10 +33,9 @@ class LibraryService {
       res.forEach((book) {
         books.add(Book.fromJson(book));
       });
-      return books;
+      updateLibrary(books);
     } catch (e) {
       print('LibraryService.getOwnLibrary e: $e');
-      return [];
     }
   }
 
@@ -49,7 +62,7 @@ class LibraryService {
     try {
       for (Book book in books) {
         final res = await _httpService.post(path: 'user/addBook/${book.id}');
-        print('AddLibraryViewModel.saveBooks res: $res');
+        await getOwnLibrary();
       }
       return true;
     } catch (e) {

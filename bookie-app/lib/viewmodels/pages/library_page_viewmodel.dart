@@ -1,6 +1,7 @@
 import 'package:bookie/app/locator.dart';
 import 'package:bookie/models/book.dart';
 import 'package:bookie/services/library_service.dart';
+import 'package:bookie/views/pages/library_page.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -8,11 +9,36 @@ class LibraryPageViewModel extends FutureViewModel {
   final _libraryService = locator<LibraryService>();
   final _dialogService = locator<DialogService>();
 
-  List<Book> books = [];
+  List<ReactiveServiceMixin> _reactiveServices = [];
+  List<Book> get books => _libraryService.libraryBooks;
+
+  LibraryPageViewModel() {
+    _reactiveServices = [_libraryService];
+    _reactToServices(_reactiveServices);
+  }
+
+  void _reactToServices(List<ReactiveServiceMixin> reactiveServices) {
+    _reactiveServices = reactiveServices;
+    for (var reactiveService in _reactiveServices) {
+      reactiveService.addListener(_indicateChange);
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var reactiveService in _reactiveServices) {
+      reactiveService.removeListener(_indicateChange);
+    }
+    super.dispose();
+  }
+
+  void _indicateChange() {
+    notifyListeners();
+  }
 
   @override
   Future futureToRun() async {
-    books = await _libraryService.getOwnLibrary();
+    await _libraryService.getOwnLibrary();
   }
 
   void removeFromLibrary(Book book) async {
@@ -26,7 +52,6 @@ class LibraryPageViewModel extends FutureViewModel {
 
     setBusy(true);
     await _libraryService.removeBook(book);
-    books = await _libraryService.getOwnLibrary();
     setBusy(false);
     notifyListeners();
   }
