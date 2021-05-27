@@ -1,5 +1,6 @@
 package com.swe.bookie.dao;
 
+import com.swe.bookie.entity.Address;
 import com.swe.bookie.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getByEmail(String email);
 
-    List<User> getByAddress_City(String city);
+    List<User> getByAddress(Address address);
 
 
 }

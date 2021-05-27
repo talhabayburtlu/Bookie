@@ -2,10 +2,7 @@ package com.swe.bookie.service.concretes;
 
 import com.swe.bookie.dao.AddressRepository;
 import com.swe.bookie.dao.UserRepository;
-import com.swe.bookie.entity.Book;
-import com.swe.bookie.entity.Comment;
-import com.swe.bookie.entity.Post;
-import com.swe.bookie.entity.User;
+import com.swe.bookie.entity.*;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.mapper.UserMapper;
@@ -111,13 +108,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersByCity(String city) {
-        return userRepository.getByAddress_City(city);
+    public List<User> getUsersByAddress(Address address) {
+        return userRepository.getByAddress(address);
     }
 
     @Override
     public List<HomepagePostResponse> getHomepagePostsByUserId(int userId) {
-        List<User> users = getUsersByCity(userRepository.getById(userId).getAddress().getCity());
+        List<User> users = getUsersByAddress(userRepository.getById(userId).getAddress());
 
         List<HomepagePostResponse> homepagePostResponses = new ArrayList<>();
         for (User user : users) {

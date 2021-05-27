@@ -10,6 +10,7 @@ import com.swe.bookie.service.abstracts.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +50,14 @@ public class PostServiceImpl implements PostService {
     public List<Book> getBooksByUserId(int userId) {
         List<Post> userPosts = postRepository.getAllByUserId(userId);
         List<String> bookIds = userPosts.stream().map(Post::getBookId).collect(Collectors.toList());
-        return bookService.getAllById(bookIds);
+
+        List<Book> books = new ArrayList<>();
+
+        for (String bookId : bookIds) {
+            books.add(bookService.getById(bookId));
+
+        }
+        return books;
     }
 
 
@@ -64,7 +72,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> getAllPostsByUserId(int userId){
+    public List<Post> getAllPostsByUserId(int userId) {
         return postRepository.getAllByUserId(userId);
     }
 
