@@ -5,16 +5,15 @@ class User {
   final String name;
   final String email;
   final String phone;
-  final Address address;
+  final String city;
 
-  User({this.name, this.email, this.phone, this.address});
+  User({this.name, this.email, this.phone, this.city});
 
-  const User.mocked({
-    this.name = "Tester Tester",
-    this.email = "test@test.com",
-    this.phone = "123",
-    this.address = const Address.mocked(),
-  });
+  const User.mocked(
+      {this.name = "Tester Tester",
+      this.email = "test@test.com",
+      this.phone = "123",
+      this.city = "Istanbul"});
 
   static User fromJson(Map<String, dynamic> map) {
     if (map == null) {
@@ -22,13 +21,19 @@ class User {
     }
     try {
       return User(
-          name: map["name"],
-          email: map["email"],
-          phone: map["phone"],
-          address: Address.fromJson(map["address"]));
+        name: map["fullname"],
+        email: map["email"],
+        phone: map["phone"],
+        city: map["city"],
+      );
     } catch (e) {
       print('User.fromJson e: $e');
       return null;
     }
+  }
+
+  @override
+  String toString() {
+    return "<$name - $email>";
   }
 }

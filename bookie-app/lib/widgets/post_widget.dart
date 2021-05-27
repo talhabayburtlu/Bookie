@@ -16,7 +16,8 @@ class PostWidget extends StatelessWidget {
         elevation: 4,
         child: Column(
           children: [
-            Text(post.user.name),
+            Text(post.user.name ?? "user"),
+            Text(post.user.phone ?? "0"),
             verticalSpaceSmall,
             Container(
               height: 100,
@@ -27,7 +28,7 @@ class PostWidget extends StatelessWidget {
                       (Book book) => Container(
                           padding: EdgeInsets.symmetric(horizontal: 4),
                           child: Image.network(
-                            book.imageThumbnailLink,
+                            book.imageThumbnailLink ?? BOOK_FALLBACK_URL,
                             fit: BoxFit.cover,
                             height: 60,
                           )),

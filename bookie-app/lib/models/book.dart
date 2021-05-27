@@ -58,4 +58,9 @@ class Book {
 
   @override
   int get hashCode => this.id.hashCode;
+
+  @override
+  String toString() {
+    return "<$id $title $author>";
+  }
 }

@@ -12,10 +12,17 @@ class HomePage extends StatelessWidget {
       builder: (context, model, _) => Container(
         child: model.isBusy
             ? Center(child: CircularProgressIndicator())
-            : ListView(
-                children: model.data
-                    .map((Post post) => PostWidget(post: post))
-                    .toList()),
+            : model.data.isEmpty
+                ? Center(
+                    child: Text(
+                      "No posts! ",
+                      style: TextStyle(fontSize: 28),
+                    ),
+                  )
+                : ListView(
+                    children: model.data
+                        .map((Post post) => PostWidget(post: post))
+                        .toList()),
       ),
     );
   }

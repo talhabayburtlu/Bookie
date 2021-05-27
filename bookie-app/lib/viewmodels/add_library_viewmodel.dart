@@ -29,10 +29,7 @@ class AddLibraryViewModel extends BaseViewModel {
   void saveBooks() async {
     try {
       setBusy(true);
-      for (Book book in selectedBooks) {
-        final res = await _httpService.post(path: 'user/addBook/${book.id}');
-        print('AddLibraryViewModel.saveBooks res: $res');
-      }
+      _libraryService.addBooks(selectedBooks);
       setBusy(false);
       _navigationService.back();
       _snackbarService.showSnackbar(message: "Successfully added books");

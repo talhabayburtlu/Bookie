@@ -44,4 +44,28 @@ class LibraryService {
       return [];
     }
   }
+
+  Future<bool> addBooks(List<Book> books) async {
+    try {
+      for (Book book in books) {
+        final res = await _httpService.post(path: 'user/addBook/${book.id}');
+        print('AddLibraryViewModel.saveBooks res: $res');
+      }
+      return true;
+    } catch (e) {
+      print('LibraryService.addBooks e: $e');
+      return false;
+    }
+  }
+
+  Future<bool> removeBook(Book book) async {
+    try {
+      final res = await _httpService.delete(
+          path: "user/deleteBook", queryParams: "?bookId=${book.id}");
+      return true;
+    } catch (e) {
+      print('LibraryService.removeBook e: $e');
+      return false;
+    }
+  }
 }

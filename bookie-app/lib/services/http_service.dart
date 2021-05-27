@@ -24,7 +24,7 @@ class HttpService {
           if (_token != null) HttpHeaders.authorizationHeader: "Bearer $_token"
         },
       );
-      final data = jsonDecode(response.body);
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
       return data;
     } catch (e) {
       print('HttpService.get e: $e');
@@ -49,7 +49,7 @@ class HttpService {
       if (response == null || response?.statusCode > 200) {
         return null;
       }
-      final data = jsonDecode(response.body);
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
       return data;
     } catch (e) {
       // print('HttpService.post e: $e');
@@ -60,5 +60,27 @@ class HttpService {
   void setToken(token) {
     _token = token;
     print('HttpService.setToken $token');
+  }
+
+  Future<dynamic> delete({String path, String queryParams}) async {
+    try {
+      if (queryParams != null) {
+        path += queryParams;
+      }
+      Uri uri = Uri.parse(url + path);
+      print('HttpService.delete uri: $uri');
+      final response = await http.delete(
+        uri,
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          if (_token != null) HttpHeaders.authorizationHeader: "Bearer $_token"
+        },
+      );
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
+      return data;
+    } catch (e) {
+      print('HttpService.delete e: $e');
+      return null;
+    }
   }
 }

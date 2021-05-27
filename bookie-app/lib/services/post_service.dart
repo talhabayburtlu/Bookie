@@ -8,7 +8,22 @@ class PostService {
   final _httpService = locator<HttpService>();
 
   Future<List<Post>> fetchPostsForUser() async {
-    await Future.delayed(Duration(seconds: 2));
-    return [for (int i = 0; i < 3; i++) Post.mocked()];
+    try {
+      final List<dynamic> res =
+          await _httpService.get(path: 'user/getHomepagePosts');
+
+      if (res == null) {
+        return [];
+      }
+
+      List<Post> posts = [];
+      res.forEach((postData) {
+        posts.add(Post.fromJson(postData));
+      });
+      return posts;
+    } catch (e) {
+      print('PostService.fetchPostsForUser e: $e');
+      return [];
+    }
   }
 }
