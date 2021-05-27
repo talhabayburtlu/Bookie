@@ -15,9 +15,9 @@ public interface UserService {
 
     void save(User user);
 
-    Post addBookToUser(String bookId, int userId);
+    Post addBookToUser(String bookId, User user);
 
-    Post removeBookFromUser(String bookId, int userId);
+    Post removeBookFromUser(String bookId, User user);
 
     List<Book> getUserBooksByUserId(int userId);
 

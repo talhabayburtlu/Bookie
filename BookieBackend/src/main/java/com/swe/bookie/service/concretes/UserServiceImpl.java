@@ -61,13 +61,26 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Post addBookToUser(String bookId, int userId) {
-        return postService.add(bookId, userId);
+    public Post addBookToUser(String bookId, User user) {
+        Post existPost = user.getPosts().stream().filter(post ->
+                post.getBookId().equals(bookId)
+        ).findFirst().orElse(null);
+
+        if (existPost != null) { // If book already added to user's library, then return the post has been created.
+            return existPost;
+        }
+
+        return postService.add(bookId, user); // If not return newly created post.
     }
 
     @Override
-    public Post removeBookFromUser(String bookId, int userId) {
-        return postService.delete(bookId, userId);
+    public Post removeBookFromUser(String bookId, User user) {
+        Post existPost = user.getPosts().stream().filter(post -> post.getBookId().equals(bookId)).findFirst().orElse(null);
+
+        if (existPost == null)
+            throw new RuntimeException("The book is not owned by this user.");
+
+        return postService.delete(bookId, user);
     }
 
     @Override

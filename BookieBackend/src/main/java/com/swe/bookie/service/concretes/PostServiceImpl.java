@@ -31,21 +31,19 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post add(String bookId, int userId) {
+    public Post add(String bookId, User user) {
         Post userBookToAdd = new Post();
-        userBookToAdd.setUserId(userId);
+        userBookToAdd.setUserId(user.getId());
         userBookToAdd.setBookId(bookId);
         userBookToAdd.setStatus("Available");
         return postRepository.save(userBookToAdd);
     }
 
     @Override
-    public Post delete(String bookId, int userId) {
-        Post post = postRepository.getByBookIdAndUserId(bookId,userId);
+    public Post delete(String bookId, User user) {
+        Post post = postRepository.getByBookIdAndUserId(bookId, user.getId());
         return postRepository.deleteById(post.getId());
     }
-
-
 
     @Override
     public List<Book> getBooksByUserId(int userId) {
