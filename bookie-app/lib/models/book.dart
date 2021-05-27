@@ -31,18 +31,31 @@ class Book {
           "https://nalport.com/image/cache/catalog/kitap/hayvan-ciftligi-(yeni-kapak)---george-orwell-img-550x550.png"});
 
   static Book fromJson(Map<String, dynamic> map) {
-    if (map == null) {
+    try {
+      if (map == null) {
+        return null;
+      }
+
+      return Book(
+          id: map["id"],
+          title: map["title"],
+          description: map["description"],
+          author: map["author"],
+          isbn: map["isbn"],
+          subtitle: map["subtitle"],
+          imageSmallThumbnailLink: map["imageSmallThumbnailLink"],
+          imageThumbnailLink: map["imageThumbnailLink"]);
+    } catch (e) {
+      print('Book.fromJson e: $e');
       return null;
     }
-
-    return Book(
-        id: map["id"],
-        title: map["title"],
-        description: map["description"],
-        author: map["author"],
-        isbn: map["isbn"],
-        subtitle: map["subtitle"],
-        imageSmallThumbnailLink: map["imageSmallThumbnailLink"],
-        imageThumbnailLink: map["imageThumbnailLink"]);
   }
+
+  @override
+  bool operator ==(covariant Book other) {
+    return this.id == other.id && this.title == other.title;
+  }
+
+  @override
+  int get hashCode => this.id.hashCode;
 }

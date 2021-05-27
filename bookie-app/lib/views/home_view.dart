@@ -7,13 +7,22 @@ import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   final List<Widget> _pages = [HomePage(), LibraryPage(), ProfilePage()];
+  final List<String> titles = ["Home Page", "My Library", "My Profile"];
 
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       builder: (context, model, child) => Scaffold(
+        floatingActionButton: model.shouldShowFAB
+            ? FloatingActionButton(
+                onPressed: () {
+                  model.navigateToAddView();
+                },
+                child: Icon(Icons.add),
+              )
+            : null,
         appBar: AppBar(
-          title: Text("Home Screen"),
+          title: Text(titles[model.currentIndex]),
         ),
         bottomNavigationBar: BottomNavigationBar(
           onTap: (i) => model.setIndex(i),
