@@ -15,7 +15,6 @@ import com.swe.bookie.service.abstracts.BookService;
 import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -38,8 +37,7 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private PasswordEncoder bcryptEncoder;
+
 
 
     @PostMapping("/addBook/{bookId}")
@@ -89,15 +87,9 @@ public class UserController {
 
     @PutMapping("/me")
     public UserResource updateMyDetails(@RequestBody UserDTO userDTO) {
-        org.springframework.security.core.userdetails.User securityUser = // Getting authenticated user details.
-                (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findByEmail(securityUser.getUsername()); // Getting authenticated user by using user details.
-
-        User updatedUser = userMapper.toEntity(userDTO, user);
-        updatedUser.setPassword(bcryptEncoder.encode(updatedUser.getPassword()));
-
-        userService.save(updatedUser);
-        return userMapper.toResource(updatedUser);
+        User user = authService.getAuthenticatedUser();
+        user = userService.updateUserDetails(userDTO, user);
+        return userMapper.toResource(user);
     }
 
 
