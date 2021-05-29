@@ -3,6 +3,7 @@ package com.swe.bookie.service.concretes;
 import com.swe.bookie.dao.AddressRepository;
 import com.swe.bookie.dao.UserRepository;
 import com.swe.bookie.entity.*;
+import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.mapper.UserMapper;
@@ -10,6 +11,8 @@ import com.swe.bookie.service.abstracts.CommentService;
 import com.swe.bookie.service.abstracts.PostService;
 import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -35,6 +38,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CommentService commentService;
 
+    @Autowired
+    @Lazy
+    private PasswordEncoder bcryptEncoder;
 
     @Override
     public User findById(int id) {
@@ -99,6 +105,25 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Post> getPostByUserId(int userId) {
         return postService.getAllPostsByUserId(userId);
+    }
+
+    @Override
+    public User updateUserDetails(UserDTO userDTO, User user) {
+        if (userDTO.getFullname() != null)
+            user.setFullname(userDTO.getFullname());
+        if (userDTO.getAge() != 0)
+            user.setAge(userDTO.getAge());
+        if (userDTO.getAddressId() != 0)
+            user.setAddress(addressRepository.getOne(userDTO.getAddressId()));
+        if (userDTO.getEmail() != null)
+            user.setEmail(userDTO.getEmail());
+        if (userDTO.getPassword() != null)
+            user.setPassword(bcryptEncoder.encode(userDTO.getPassword()));
+        if (userDTO.getPhone() != null)
+            user.setPhone(userDTO.getPhone());
+
+        this.save(user);
+        return user;
     }
 
     @Override

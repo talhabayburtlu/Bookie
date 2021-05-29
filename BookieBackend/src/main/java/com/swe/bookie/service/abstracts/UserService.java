@@ -1,6 +1,7 @@
 package com.swe.bookie.service.abstracts;
 
 import com.swe.bookie.entity.*;
+import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public interface UserService {
 
     List<Post> getPostByUserId(int userId);
 
-
+    User updateUserDetails(UserDTO userDTO, User user);
 
     List<HomepagePostResponse> getHomepagePostsByUserId(int userId);
 
