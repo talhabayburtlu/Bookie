@@ -11,9 +11,33 @@ class ProfilePageViewModel extends FutureViewModel<User> {
   final AuthService _authService = locator<AuthService>();
   final NavigationService _navigationService = locator<NavigationService>();
 
-  User _user;
+  List<ReactiveServiceMixin> _reactiveServices = [];
 
-  User get user => _user;
+  User get user => _authService.user;
+
+  ProfilePageViewModel() {
+    _reactiveServices = [_authService];
+    _reactToServices(_reactiveServices);
+  }
+
+  void _reactToServices(List<ReactiveServiceMixin> reactiveServices) {
+    _reactiveServices = reactiveServices;
+    for (var reactiveService in _reactiveServices) {
+      reactiveService.addListener(_indicateChange);
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var reactiveService in _reactiveServices) {
+      reactiveService.removeListener(_indicateChange);
+    }
+    super.dispose();
+  }
+
+  void _indicateChange() {
+    notifyListeners();
+  }
 
   void logout() {
     _authService.logout();
@@ -22,8 +46,9 @@ class ProfilePageViewModel extends FutureViewModel<User> {
 
   @override
   Future<User> futureToRun() async {
-    _user = await _authService.getUserDetails();
-    return _user;
+    final user = await _authService.getUserDetails();
+    _authService.updateUser(user);
+    return user;
   }
 
   void updateProfile() {
