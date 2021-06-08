@@ -83,4 +83,29 @@ class HttpService {
       return null;
     }
   }
+
+  Future<dynamic> put({String path, Map<String, dynamic> body}) async {
+    try {
+      final uri = Uri.parse(url + path);
+      print("uri is $uri");
+      final response = await http.put(
+        uri,
+        body: jsonEncode(body),
+        headers: {
+          HttpHeaders.contentTypeHeader: "application/json",
+          if (_token != null) HttpHeaders.authorizationHeader: "Bearer $_token"
+        },
+      );
+      print(
+          "response is $response | ${response.statusCode} | ${response.body}");
+      if (response == null || response?.statusCode > 200) {
+        return null;
+      }
+      final data = jsonDecode(utf8.decode(response.bodyBytes));
+      return data;
+    } catch (e) {
+      // print('HttpService.post e: $e');
+      return null;
+    }
+  }
 }

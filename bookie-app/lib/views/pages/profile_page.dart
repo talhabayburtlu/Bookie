@@ -8,7 +8,7 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfilePageViewModel>.reactive(
       builder: (ctx, model, _) => model.isBusy
-          ? CircularProgressIndicator()
+          ? Center(child: CircularProgressIndicator())
           : Container(
               width: double.infinity,
               child: Column(

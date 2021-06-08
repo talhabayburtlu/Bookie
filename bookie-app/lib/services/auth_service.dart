@@ -74,10 +74,30 @@ class AuthService {
       if (res == null) {
         return null;
       }
-      return User.fromJson(res);
+      _user = User.fromJson(res);
+      return _user;
     } catch (e) {
       print('AuthService.getUserDetails e: $e');
       return null;
+    }
+  }
+
+  Future<bool> updateUserDetails(
+      {String name, String email, String phone}) async {
+    try {
+      final res = await _httpService.put(path: "user/me", body: {
+        'fullname': name,
+        'email': email,
+        'phone': phone,
+      });
+      if (res == null) {
+        return false;
+      }
+      _user = _user.copyWith(name: name, email: email, phone: phone);
+      return true;
+    } catch (e) {
+      print('AuthService.updateUserDetails e: $e');
+      return false;
     }
   }
 
