@@ -16,25 +16,41 @@ class ProfilePage extends StatelessWidget {
                   verticalSpaceMedium,
                   Container(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Name: "),
-                            Text("${model.user.name}"),
+                            Text(
+                              "Name: ",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${model.user.name}",
+                              style: TextStyle(fontSize: 18),
+                            ),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Email: "),
+                            Text(
+                              "Email: ",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
                             Text("${model.user.email}"),
                           ],
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Phone: "),
+                            Text(
+                              "Phone: ",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
                             Text("${model.user.phone}"),
                           ],
                         )
