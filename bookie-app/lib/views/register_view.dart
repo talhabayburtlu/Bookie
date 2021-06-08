@@ -2,6 +2,7 @@ import 'package:bookie/utils/ui_helpers.dart';
 import 'package:bookie/viewmodels/register_viewmodel.dart';
 import 'package:bookie/widgets/busy_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
 
 class RegisterView extends StatefulWidget {
@@ -56,6 +57,7 @@ class _RegisterViewState extends State<RegisterView> {
                             },
                           ),
                           TextFormField(
+                            keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
                                 labelText: "Eposta"),
@@ -88,7 +90,12 @@ class _RegisterViewState extends State<RegisterView> {
                             },
                           ),
                           TextFormField(
+                            keyboardType: TextInputType.phone,
+                            inputFormatters: [
+                              LengthLimitingTextInputFormatter(11)
+                            ],
                             decoration: InputDecoration(
+                                hintText: "0XXXXXXXXXX",
                                 border: OutlineInputBorder(),
                                 labelText: "Phone Number"),
                             controller: _phoneController,
