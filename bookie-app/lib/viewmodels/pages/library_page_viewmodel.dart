@@ -1,7 +1,6 @@
 import 'package:bookie/app/locator.dart';
 import 'package:bookie/models/book.dart';
 import 'package:bookie/services/library_service.dart';
-import 'package:bookie/views/pages/library_page.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
