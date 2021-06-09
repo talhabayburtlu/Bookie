@@ -56,7 +56,8 @@ class BookWidget extends ViewModelWidget<LibraryPageViewModel> {
                         fontWeight: FontWeight.w500,
                         color: Colors.black),
                   ),
-                  Text("by ${book.author}" ?? "AUTHOR"),
+                  if (book.author != null)
+                    Text("by ${book.author}" ?? "AUTHOR"),
                 ],
               ),
             ),

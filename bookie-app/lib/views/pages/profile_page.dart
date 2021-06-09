@@ -1,3 +1,4 @@
+import 'package:bookie/utils/ui_helpers.dart';
 import 'package:bookie/viewmodels/pages/profile_page_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -7,22 +8,56 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<ProfilePageViewModel>.reactive(
       builder: (ctx, model, _) => model.isBusy
-          ? CircularProgressIndicator()
+          ? Center(child: CircularProgressIndicator())
           : Container(
               width: double.infinity,
               child: Column(
                 children: [
+                  verticalSpaceMedium,
                   Container(
-                    child: Card(
-                      child: Column(
-                        children: [
-                          Text("${model.user.name}"),
-                          Text("${model.user.email}"),
-                          Text("${model.user.phone}")
-                        ],
-                      ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Name: ",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${model.user.name}",
+                              style: TextStyle(fontSize: 18),
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Email: ",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text("${model.user.email}"),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Phone: ",
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text("${model.user.phone}"),
+                          ],
+                        )
+                      ],
                     ),
                   ),
+                  verticalSpaceMedium,
                   RaisedButton(
                     onPressed: () {
                       model.updateProfile();

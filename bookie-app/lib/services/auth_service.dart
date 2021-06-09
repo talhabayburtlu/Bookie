@@ -2,13 +2,24 @@ import 'package:bookie/app/locator.dart';
 import 'package:bookie/models/user.dart';
 import 'package:bookie/services/http_service.dart';
 import 'package:injectable/injectable.dart';
+import 'package:stacked/stacked.dart';
+import 'package:observable_ish/observable_ish.dart';
 
 @lazySingleton
-class AuthService {
-  User _user;
+class AuthService with ReactiveServiceMixin {
   final _httpService = locator<HttpService>();
 
-  User get user => _user;
+  AuthService() {
+    listenToReactiveValues([_user]);
+  }
+
+  RxValue<User> _user = RxValue<User>(initial: null);
+
+  User get user => _user.value;
+
+  void updateUser(User user) {
+    _user.value = user;
+  }
 
   bool get hasUser {
     return _user != null;
@@ -74,10 +85,30 @@ class AuthService {
       if (res == null) {
         return null;
       }
-      return User.fromJson(res);
+      updateUser(User.fromJson(res));
+      return user;
     } catch (e) {
       print('AuthService.getUserDetails e: $e');
       return null;
+    }
+  }
+
+  Future<bool> updateUserDetails(
+      {String name, String email, String phone}) async {
+    try {
+      final res = await _httpService.put(path: "user/me", body: {
+        'fullname': name,
+        'email': email,
+        'phone': phone,
+      });
+      if (res == null) {
+        return false;
+      }
+      updateUser(user.copyWith(name: name, email: email, phone: phone));
+      return true;
+    } catch (e) {
+      print('AuthService.updateUserDetails e: $e');
+      return false;
     }
   }
 
