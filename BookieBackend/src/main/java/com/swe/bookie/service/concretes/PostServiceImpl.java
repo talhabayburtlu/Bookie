@@ -72,6 +72,12 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public List<Comment> getCommentsByUserIdAndBookId(int userId, String bookId){
+        Post post = postRepository.getByBookIdAndUserId(bookId,userId);
+        return getAllByPostId(post.getId());
+    }
+
+    @Override
     public List<Post> getAllPostsByUserId(int userId) {
         return postRepository.getAllByUserId(userId);
     }

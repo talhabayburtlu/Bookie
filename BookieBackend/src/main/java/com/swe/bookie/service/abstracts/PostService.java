@@ -20,6 +20,9 @@ public interface PostService {
     Comment toComment(User sender, int postId, String description);
 
     List<Comment> getAllByPostId(int postId);
+
+    List<Comment> getCommentsByUserIdAndBookId(int userId, String bookId);
+
     List<Post> getAllPostsByUserId(int userId);
 
     Post updatePostStatus(int postId, String status, User user);
