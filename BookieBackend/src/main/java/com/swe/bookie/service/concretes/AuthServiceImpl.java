@@ -60,21 +60,20 @@ public class AuthServiceImpl implements AuthService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Incorrect email and password.");
+            return new LoginResource(null, "Kullanıcı adı veya şifre hatalı.");
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDTO.getEmail()); // Loading user details.
         final String jwt = jwtTokenUtil.generateToken(userDetails); // Generating jwt token in order to send it back.
-        return new LoginResource(jwt);
+        return new LoginResource(jwt, "Giriş yapıldı.");
     }
 
     @Override
     public UserResource register(UserDTO userDTO) {
-        System.out.println(userDTO);
         User user = userMapper.toEntity(userDTO);
         user.setPassword(bcryptEncoder.encode(user.getPassword())); // Setting password by encoding it.
-        userService.save(user);
 
+        userService.save(user);
 
         return userMapper.toResource(user);
     }

@@ -16,8 +16,7 @@ public interface PostService {
 
     List<Book> getBooksByUserId(int userId);
 
-
-    Comment toComment(User sender, int postId, String description);
+    Comment toComment(User sender, int ownerId, String bookId, String description);
 
     List<Comment> getAllByPostId(int postId);
 

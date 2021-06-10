@@ -12,4 +12,5 @@ import lombok.Setter;
 public class RegisterResource {
     private UserResource userResource;
     private LoginResource loginResource;
+    private String message;
 }

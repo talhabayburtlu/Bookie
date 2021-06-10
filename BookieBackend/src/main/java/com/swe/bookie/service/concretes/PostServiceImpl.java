@@ -62,8 +62,8 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public Comment toComment(User sender, int postId, String description) {
-        return commentService.add(sender, postRepository.getById(postId), description);
+    public Comment toComment(User sender, int ownerId, String bookId, String description) {
+        return commentService.add(sender, postRepository.getByBookIdAndUserId(bookId, ownerId), description);
     }
 
     @Override

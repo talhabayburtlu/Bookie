@@ -11,4 +11,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class LoginResource {
     private String jwtToken;
+    private String message;
 }

@@ -62,7 +62,7 @@ public class UserController {
 
     @PostMapping("/toComment")
     Comment toComment(@RequestBody CommentDTO commentDTO) {
-        return userService.toComment(authService.getAuthenticatedUser().getId(), commentDTO.getPostId(), commentDTO.getContent());
+        return userService.toComment(authService.getAuthenticatedUser().getId(), commentDTO.getOwnerId(), commentDTO.getBookId(), commentDTO.getContent());
     }
 
     @DeleteMapping("/deleteComment/{commentId}")

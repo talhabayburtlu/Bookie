@@ -31,9 +31,21 @@ public class AuthController {
 
     @PostMapping("/register")
     public RegisterResource register(@RequestBody UserDTO userDTO) {
-        UserResource userResource = this.authService.register(userDTO);
-        LoginResource loginResource = this.authService.login(new LoginDTO(userDTO.getEmail(), userDTO.getPassword()));
-        return new RegisterResource(userResource, loginResource);
+        UserResource userResource = null;
+        LoginResource loginResource = null;
+        String message = "Kayıt olundu.";
+        try {
+            userResource = this.authService.register(userDTO);
+            loginResource = this.authService.login(new LoginDTO(userDTO.getEmail(), userDTO.getPassword()));
+        } catch (Exception e) {
+            if (e.getLocalizedMessage().contains("uq_user_mail"))
+                message = "Bu email başka bir kullanıcı tarafından kullanılıyor.";
+            else if (e.getLocalizedMessage().contains("uq_phone"))
+                message = "Bu telefon başka bir kullanıcı tarafından kullanılıyor.";
+            else
+                message = "Beklenmedik bir hata oluştu.";
+        }
+        return new RegisterResource(userResource, loginResource, message);
     }
 
 }
