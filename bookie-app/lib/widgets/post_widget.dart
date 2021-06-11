@@ -22,8 +22,8 @@ class PostWidget extends ViewModelWidget<HomePageViewModel> {
           elevation: 4,
           child: Column(
             children: [
-              Text(post.user.name ?? "user"),
-              Text(post.user.phone ?? "0"),
+              Text(post.user?.name ?? "user"),
+              Text(post.user?.phone ?? "0"),
               verticalSpaceSmall,
               Container(
                 height: 100,

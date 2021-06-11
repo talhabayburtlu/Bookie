@@ -1,6 +1,6 @@
 class User {
   // Represents the fullname name + ' ' + surname
-  final String id;
+  final int id;
   final String name;
   final String email;
   final String phone;
