@@ -1,20 +1,16 @@
 class User {
   // Represents the fullname name + ' ' + surname
+  final String id;
   final String name;
   final String email;
   final String phone;
   final String city;
 
-  User({this.name, this.email, this.phone, this.city});
-
-  const User.mocked(
-      {this.name = "Tester Tester",
-      this.email = "test@test.com",
-      this.phone = "123",
-      this.city = "Istanbul"});
+  User({this.id, this.name, this.email, this.phone, this.city});
 
   User copyWith({String email, String name, String phone}) {
     return User(
+        id: this.id,
         email: email ?? this.email,
         phone: phone ?? this.phone,
         name: name ?? this.name,
@@ -27,6 +23,7 @@ class User {
     }
     try {
       return User(
+        id: map["id"],
         name: map["fullname"],
         email: map["email"],
         phone: map["phone"],

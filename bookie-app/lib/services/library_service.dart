@@ -29,7 +29,6 @@ class LibraryService with ReactiveServiceMixin {
         return [];
       }
       List<Book> books = [];
-      print('LibraryService.getOwnLibrary res: $res');
       res.forEach((book) {
         books.add(Book.fromJson(book));
       });
@@ -75,6 +74,7 @@ class LibraryService with ReactiveServiceMixin {
     try {
       final res = await _httpService.delete(
           path: "user/deleteBook", queryParams: "?bookId=${book.id}");
+      await getOwnLibrary();
       return true;
     } catch (e) {
       print('LibraryService.removeBook e: $e');

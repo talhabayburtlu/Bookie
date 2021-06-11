@@ -12,6 +12,7 @@ class PostService {
   Book _selectedBook;
 
   Post get selectedPost => _selectedPost;
+
   Book get selectedBook => _selectedBook;
 
   void selectPost(Post post) {
@@ -41,4 +42,20 @@ class PostService {
       return [];
     }
   }
+
+  Future<List<dynamic>> fetchCommentsForPost() async {
+    try {
+      final userId = _selectedPost.user.id;
+      final bookId = _selectedBook.id;
+
+      final List<dynamic> res = await _httpService.get(
+          path: "post/getCommentsByUserIdAndBookId",
+          queryParams: "?userId=$userId&bookId=$bookId");
+    } catch (e) {
+      print('PostService.fetchCommentsForPost e: $e');
+      return [];
+    }
+  }
+
+  Future<bool> addComment() {}
 }

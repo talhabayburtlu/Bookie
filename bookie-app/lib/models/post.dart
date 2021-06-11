@@ -8,14 +8,6 @@ class Post {
 
   Post({this.user, this.books});
 
-  Post.mocked(
-      {this.user = const User.mocked(),
-      this.books = const [
-        Book.mocked(),
-        Book.mocked(),
-        Book.mocked(),
-      ]});
-
   static Post fromJson(Map<String, dynamic> map) {
     if (map == null) {
       return null;
