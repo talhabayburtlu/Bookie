@@ -6,9 +6,11 @@ import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.CommentDTO;
 import com.swe.bookie.lib.dto.UserDTO;
+import com.swe.bookie.lib.resource.CommentResponse;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.lib.resource.RestrictedUserResource;
 import com.swe.bookie.lib.resource.UserResource;
+import com.swe.bookie.mapper.CommentMapper;
 import com.swe.bookie.mapper.UserMapper;
 import com.swe.bookie.service.abstracts.AuthService;
 import com.swe.bookie.service.abstracts.BookService;
@@ -37,7 +39,8 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-
+    @Autowired
+    private CommentMapper commentMapper;
 
 
     @PostMapping("/addBook/{bookId}")
@@ -61,13 +64,15 @@ public class UserController {
     }
 
     @PostMapping("/toComment")
-    Comment toComment(@RequestBody CommentDTO commentDTO) {
-        return userService.toComment(authService.getAuthenticatedUser().getId(), commentDTO.getOwnerId(), commentDTO.getBookId(), commentDTO.getContent());
+    CommentResponse toComment(@RequestBody CommentDTO commentDTO) {
+        Comment comment = userService.toComment(authService.getAuthenticatedUser().getId(), commentDTO.getOwnerId(), commentDTO.getBookId(), commentDTO.getContent());
+        return commentMapper.toResource(comment);
     }
 
     @DeleteMapping("/deleteComment/{commentId}")
-    Comment deleteComment(@PathVariable(value = "commentId") int commentId){
-        return userService.deleteComment(authService.getAuthenticatedUser().getId(), commentId);
+    CommentResponse deleteComment(@PathVariable(value = "commentId") int commentId) {
+        Comment comment = userService.deleteComment(authService.getAuthenticatedUser().getId(), commentId);
+        return commentMapper.toResource(comment);
     }
 
     @GetMapping("/me")
