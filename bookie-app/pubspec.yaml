@@ -37,7 +37,6 @@ dependencies:
   flutter_speed_dial: ^3.0.5
   font_awesome_flutter: ^9.0.0
   url_launcher: ^6.0.6
-  bubble: ^1.2.1
   intl: any
 
 dev_dependencies:
