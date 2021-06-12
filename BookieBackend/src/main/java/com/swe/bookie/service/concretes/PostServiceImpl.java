@@ -32,6 +32,11 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Post getByUserIdAndBookId(int userId, String bookId) {
+        return postRepository.getByBookIdAndUserId(bookId, userId);
+    }
+
+    @Override
     public Post add(String bookId, User user) {
         Post userBookToAdd = new Post();
         userBookToAdd.setUserId(user.getId());
@@ -83,8 +88,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePostStatus(int postId, String status, User owner) {
-        Post post = postRepository.getById(postId);
+    public Post updatePostStatus(int userId, String bookId, String status, User owner) {
+        Post post = postRepository.getByBookIdAndUserId(bookId, userId);
 
         if (post.getUserId() != owner.getId())
             throw new RuntimeException("You are not owner of this post.");

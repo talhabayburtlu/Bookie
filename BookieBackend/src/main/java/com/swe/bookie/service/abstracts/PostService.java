@@ -14,6 +14,8 @@ public interface PostService {
 
     Post getById(int id);
 
+    Post getByUserIdAndBookId(int userId, String bookId);
+
     List<Book> getBooksByUserId(int userId);
 
     Comment toComment(User sender, int ownerId, String bookId, String description);
@@ -24,5 +26,5 @@ public interface PostService {
 
     List<Post> getAllPostsByUserId(int userId);
 
-    Post updatePostStatus(int postId, String status, User user);
+    Post updatePostStatus(int userId, String bookId, String status, User user);
 }

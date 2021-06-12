@@ -8,6 +8,7 @@ import com.swe.bookie.service.abstracts.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -28,6 +29,7 @@ public class CommentServiceImpl implements CommentService {
         commentToAdd.setSender(sender);
         commentToAdd.setPost(post);
         commentToAdd.setDescription(description);
+        commentToAdd.setTimestamp(new Timestamp(System.currentTimeMillis()));
 
         return commentRepository.save(commentToAdd);
     }

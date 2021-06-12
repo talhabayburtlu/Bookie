@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PostStatusUpdateDTO {
-    private int postId;
+    private String bookId;
     private String status;
 }

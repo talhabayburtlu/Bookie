@@ -1,11 +1,13 @@
 package com.swe.bookie.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,4 +27,8 @@ public class Post {
 
     @Column(name = "book_id")
     private String bookId;
+
+    @JsonIgnore()
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 }

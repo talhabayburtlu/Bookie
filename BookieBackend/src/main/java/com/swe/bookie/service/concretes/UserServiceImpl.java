@@ -5,7 +5,9 @@ import com.swe.bookie.dao.UserRepository;
 import com.swe.bookie.entity.*;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
+import com.swe.bookie.lib.resource.PostBookResponse;
 import com.swe.bookie.lib.resource.RestrictedUserResource;
+import com.swe.bookie.mapper.PostBookMapper;
 import com.swe.bookie.mapper.UserMapper;
 import com.swe.bookie.service.abstracts.CommentService;
 import com.swe.bookie.service.abstracts.PostService;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -41,6 +44,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     @Lazy
     private PasswordEncoder bcryptEncoder;
+
+    @Autowired
+    private PostBookMapper postBookMapper;
 
     @Override
     public User findById(int id) {
@@ -152,7 +158,13 @@ public class UserServiceImpl implements UserService {
                 continue;
 
             HomepagePostResponse homepagePostResponse = new HomepagePostResponse();
-            homepagePostResponse.setBooks(booksOfCurrentUser);
+
+            List<PostBookResponse> postBookResponses = booksOfCurrentUser.stream().map(book -> {
+                Post post = postService.getByUserIdAndBookId(user.getId(), book.getId());
+                return postBookMapper.toResource(book, post.getStatus());
+            }).collect(Collectors.toList());
+
+            homepagePostResponse.setBooks(postBookResponses);
 
             RestrictedUserResource restrictedUserResource = userMapper.toRestrictedResource(user);
 

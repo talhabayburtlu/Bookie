@@ -1,9 +1,10 @@
 package com.swe.bookie.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Data
 @Entity
@@ -17,6 +18,9 @@ public class Comment {
 
     @Column(name = "description")
     private String description;
+
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
 
     @JsonIgnore()
     @ManyToOne()
