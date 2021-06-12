@@ -18,12 +18,25 @@ class PostWidget extends ViewModelWidget<HomePageViewModel> {
         onTap: () {
           model.showPostDetails(post);
         },
-        child: Card(
-          elevation: 4,
+        child: Container(
+          padding: EdgeInsets.only(),
+          margin: EdgeInsets.symmetric(horizontal: 6),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(9)),
+            border: Border.all(color: const Color(0x59abb4bd), width: 0.5),
+          ),
           child: Column(
             children: [
-              Text(post.user?.name ?? "user"),
-              Text(post.user?.phone ?? "0"),
+              verticalSpaceSmall,
+              Text(
+                post.user?.name ?? "",
+                style: TextStyle(fontWeight: FontWeight.w500),
+              ),
+              Text(
+                post.user?.phone ?? "",
+                style: TextStyle(fontWeight: FontWeight.w300),
+              ),
               verticalSpaceSmall,
               Container(
                 height: 100,
@@ -35,8 +48,8 @@ class PostWidget extends ViewModelWidget<HomePageViewModel> {
                             padding: EdgeInsets.symmetric(horizontal: 4),
                             child: Image.network(
                               book.imageThumbnailLink ?? BOOK_FALLBACK_URL,
-                              fit: BoxFit.cover,
-                              height: 60,
+                              fit: BoxFit.scaleDown,
+                              width: 80,
                             )),
                       )
                       .toList(),

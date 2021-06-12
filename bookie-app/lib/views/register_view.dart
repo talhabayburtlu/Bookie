@@ -1,6 +1,7 @@
 import 'package:bookie/utils/ui_helpers.dart';
 import 'package:bookie/viewmodels/register_viewmodel.dart';
 import 'package:bookie/widgets/busy_button.dart';
+import 'package:bookie/widgets/global_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:stacked/stacked.dart';
@@ -27,8 +28,8 @@ class _RegisterViewState extends State<RegisterView> {
     return ViewModelBuilder<RegisterViewModel>.reactive(
       viewModelBuilder: () => RegisterViewModel(),
       builder: (context, model, _) => Scaffold(
-          appBar: AppBar(
-            title: Text("Register"),
+          appBar: GlobalAppBar(
+            title: "Register",
           ),
           body: SingleChildScrollView(
             child: Container(

@@ -8,19 +8,18 @@ class LibraryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LibraryPageViewModel>.reactive(
-      viewModelBuilder: () => LibraryPageViewModel(),
-      builder: (ctx, model, _) => model.isBusy
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView(
-              children: model.books
-                  .map((book) => BookWidget(
-                        book: book,
-                      ))
-                  .toList(),
-            ),
-    );
+        viewModelBuilder: () => LibraryPageViewModel(),
+        builder: (ctx, model, _) => model.isBusy
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : ListView.separated(
+                itemCount: model.books.length,
+                separatorBuilder: (_, __) => Divider(
+                  color: Colors.grey,
+                ),
+                itemBuilder: (ctx, i) => BookWidget(book: model.books[i]),
+              ));
   }
 }
 
@@ -38,7 +37,7 @@ class BookWidget extends ViewModelWidget<LibraryPageViewModel> {
           Image.network(
             book.imageThumbnailLink ?? BOOK_FALLBACK_URL,
             fit: BoxFit.cover,
-            width: 80,
+            width: 70,
           ),
           Expanded(
             child: Container(
@@ -69,7 +68,7 @@ class BookWidget extends ViewModelWidget<LibraryPageViewModel> {
             },
             icon: Icon(
               Icons.delete,
-              color: Colors.red,
+              color: red,
             ),
           )
         ],

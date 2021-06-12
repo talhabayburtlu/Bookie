@@ -37,6 +37,8 @@ dependencies:
   flutter_speed_dial: ^3.0.5
   font_awesome_flutter: ^9.0.0
   url_launcher: ^6.0.6
+  bubble: ^1.2.1
+  intl: any
 
 dev_dependencies:
   flutter_test:
@@ -85,3 +87,10 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+fonts:
+  - family: SFProRounded
+    fonts:
+      - asset: assets/fonts/SF-Pro-Rounded-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/SF-Pro-Rounded-Regular.ttf
+        weight: 400

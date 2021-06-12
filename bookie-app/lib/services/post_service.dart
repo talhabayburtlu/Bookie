@@ -1,5 +1,6 @@
 import 'package:bookie/app/locator.dart';
 import 'package:bookie/models/book.dart';
+import 'package:bookie/models/comment.dart';
 import 'package:bookie/models/post.dart';
 import 'package:bookie/services/http_service.dart';
 import 'package:injectable/injectable.dart';
@@ -43,7 +44,7 @@ class PostService {
     }
   }
 
-  Future<List<dynamic>> fetchCommentsForPost() async {
+  Future<List<Comment>> fetchCommentsForPost() async {
     try {
       final userId = _selectedPost.user.id;
       final bookId = _selectedBook.id;
@@ -51,11 +52,33 @@ class PostService {
       final List<dynamic> res = await _httpService.get(
           path: "post/getCommentsByUserIdAndBookId",
           queryParams: "?userId=$userId&bookId=$bookId");
+      List<Comment> comments = [];
+
+      res.forEach((c) {
+        comments.add(Comment.fromJson(c));
+      });
+
+      return comments ?? [];
     } catch (e) {
       print('PostService.fetchCommentsForPost e: $e');
       return [];
     }
   }
 
-  Future<bool> addComment() {}
+  Future<bool> addComment(String content) async {
+    try {
+      final res = await _httpService.post(path: "user/toComment", body: {
+        'ownerId': _selectedPost.user.id,
+        'bookId': _selectedBook.id,
+        'content': content
+      });
+      if (res == null) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      print('PostService.addComment e: $e');
+      return false;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:bookie/viewmodels/update_details_viewmodel.dart';
+import 'package:bookie/widgets/global_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -27,8 +28,8 @@ class UpdateDetailsView extends StatelessWidget {
                             phone: _phoneController.text);
                       },
               ),
-              appBar: AppBar(
-                title: Text("Update Profile"),
+              appBar: GlobalAppBar(
+                title: "Update Profile",
               ),
               body: model.isBusy
                   ? CircularProgressIndicator()

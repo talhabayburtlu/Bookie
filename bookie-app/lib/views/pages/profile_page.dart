@@ -24,11 +24,12 @@ class ProfilePage extends StatelessWidget {
                             Text(
                               "Name: ",
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: FONT_SIZE_MEDIUM,
+                                  fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "${model.user.name}",
-                              style: TextStyle(fontSize: 18),
+                              style: TextStyle(fontSize: FONT_SIZE_MEDIUM),
                             ),
                           ],
                         ),
@@ -38,9 +39,13 @@ class ProfilePage extends StatelessWidget {
                             Text(
                               "Email: ",
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: FONT_SIZE_MEDIUM,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            Text("${model.user.email}"),
+                            Text(
+                              "${model.user.email}",
+                              style: TextStyle(fontSize: FONT_SIZE_MEDIUM),
+                            ),
                           ],
                         ),
                         Row(
@@ -49,9 +54,13 @@ class ProfilePage extends StatelessWidget {
                             Text(
                               "Phone: ",
                               style: TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                                  fontSize: FONT_SIZE_MEDIUM,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            Text("${model.user.phone}"),
+                            Text(
+                              "${model.user.phone}",
+                              style: TextStyle(fontSize: FONT_SIZE_MEDIUM),
+                            ),
                           ],
                         )
                       ],

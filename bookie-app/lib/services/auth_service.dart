@@ -42,6 +42,7 @@ class AuthService with ReactiveServiceMixin {
       print('AuthService.login response is $response');
       final token = response["jwtToken"] ?? null;
       _httpService.setToken(token);
+      getUserDetails();
       return true;
     } catch (e) {
       print('AuthService.login e: $e');

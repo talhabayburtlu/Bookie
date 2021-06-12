@@ -13,6 +13,13 @@ const Widget verticalSpaceMedium = SizedBox(height: 25.0);
 const Widget verticalSpaceLarge = SizedBox(height: 40.0);
 const Widget verticalSpaceMassive = SizedBox(height: 120.0);
 
+const double FONT_SIZE_MEDIUM = 18;
+const double FONT_SIZE_LARGE = 20;
+const Color backgroundColor = const Color(0xfffafafa);
+const Color blue = const Color(0xff677fff);
+const Color darkGrey = const Color(0xff4b515c);
+const Color red = const Color(0xfff44336);
+
 Widget spacedDivider = Column(
   children: const <Widget>[
     verticalSpaceMedium,
