@@ -5,6 +5,7 @@ import com.swe.bookie.entity.Comment;
 import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.CommentDTO;
+import com.swe.bookie.lib.dto.PasswordDTO;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.*;
 import com.swe.bookie.mapper.CommentMapper;
@@ -96,9 +97,13 @@ public class UserController {
 
 
     @GetMapping("/getHomepagePosts")
-    public List<HomepagePostResponse> getHomepagePosts(){
+    public List<HomepagePostResponse> getHomepagePosts() {
         return userService.getHomepagePostsByUserId(authService.getAuthenticatedUser().getId());
     }
 
+    @PostMapping("/changePass")
+    public User changePass(@RequestBody PasswordDTO passwordDTO) {
+        return userService.changePass(passwordDTO, authService.getAuthenticatedUser().getId());
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.swe.bookie.service.abstracts;
 
 import com.swe.bookie.entity.*;
+import com.swe.bookie.lib.dto.PasswordDTO;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.lib.resource.PostBookResponse;
@@ -37,4 +38,6 @@ public interface UserService {
     List<HomepagePostResponse> getHomepagePostsByUserId(int userId);
 
     List<User> getUsersByAddress(Address address);
+
+    User changePass(PasswordDTO passwordDTO, int userId);
 }

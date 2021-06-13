@@ -3,6 +3,7 @@ package com.swe.bookie.service.concretes;
 import com.swe.bookie.dao.AddressRepository;
 import com.swe.bookie.dao.UserRepository;
 import com.swe.bookie.entity.*;
+import com.swe.bookie.lib.dto.PasswordDTO;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
 import com.swe.bookie.lib.resource.PostBookResponse;
@@ -45,6 +46,7 @@ public class UserServiceImpl implements UserService {
     @Lazy
     private PasswordEncoder bcryptEncoder;
 
+
     @Autowired
     private PostBookMapper postBookMapper;
 
@@ -66,6 +68,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public void save(User user) {
         userRepository.save(user);
+    }
+
+
+    @Override
+    public User changePass(PasswordDTO passwordDTO, int userId) {
+        User user = userRepository.getById(userId);
+
+        if (bcryptEncoder.matches(passwordDTO.getCurrentPass(), user.getPassword())) {
+            user.setPassword(bcryptEncoder.encode(passwordDTO.getNewPass()));
+            userRepository.save(user);
+            return user;
+        } else
+            return null;
     }
 
 
