@@ -1,3 +1,4 @@
+import 'package:bookie/widgets/global_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:bookie/utils/ui_helpers.dart';
 import 'package:bookie/viewmodels/splash_viewmodel.dart';
@@ -10,8 +11,8 @@ class SplashView extends StatelessWidget {
         builder: (context, model, child) {
           SizeConfig().init(context);
           return Scaffold(
-            appBar: AppBar(
-              title: Text("Splash Screen"),
+            appBar: GlobalAppBar(
+              title: "Bookie",
             ),
             body: Center(
               child: model.isBusy ? CircularProgressIndicator() : Container(),

@@ -13,10 +13,10 @@ class LoginViewModel extends BaseViewModel {
     setBusy(true);
     final result = await _authService.login(email: email, password: password);
     setBusy(false);
-    if (result) {
-      _navigationService.clearStackAndShow(Routes.homeView);
+    if (result is String || result == false) {
+      _snackbarService.showSnackbar(message: result);
     } else {
-      _snackbarService.showSnackbar(message: "Please try again");
+      _navigationService.clearStackAndShow(Routes.homeView);
     }
 
     return true;

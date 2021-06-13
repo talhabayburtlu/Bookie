@@ -1,6 +1,7 @@
 import 'package:bookie/models/book.dart';
 import 'package:bookie/utils/ui_helpers.dart';
 import 'package:bookie/viewmodels/post_details_viewmodel.dart';
+import 'package:bookie/widgets/global_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -41,8 +42,8 @@ class PostDetailsView extends StatelessWidget {
                 onTap: () => model.launchCall()),
           ],
         ),
-        appBar: AppBar(
-          title: Text("Post Details"),
+        appBar: GlobalAppBar(
+          title: "Post Details",
         ),
         body: SingleChildScrollView(
           child: Container(
@@ -50,9 +51,20 @@ class PostDetailsView extends StatelessWidget {
             child: Column(
               children: [
                 verticalSpaceSmall,
-                Text(
-                  "Kullanıcı: ${model.user.name}",
-                  style: TextStyle(fontSize: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Kullanıcı: ",
+                      style: TextStyle(
+                          fontSize: FONT_SIZE_MEDIUM,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    Text(
+                      "${model.user.name}",
+                      style: TextStyle(fontSize: FONT_SIZE_MEDIUM),
+                    )
+                  ],
                 ),
                 verticalSpaceSmall,
                 Divider(
@@ -63,12 +75,16 @@ class PostDetailsView extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Kitaplar: ",
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
+                    style: TextStyle(
+                        fontSize: FONT_SIZE_LARGE, fontWeight: FontWeight.w500),
                   ),
                 ),
                 verticalSpaceSmall,
                 ...model.selectedPost.books
                     .map((Book book) => Container(
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  bottom: BorderSide(color: Colors.grey))),
                           padding:
                               EdgeInsets.symmetric(horizontal: 4, vertical: 6),
                           child: InkWell(
@@ -81,8 +97,9 @@ class PostDetailsView extends StatelessWidget {
                                   Image.network(
                                     book.imageThumbnailLink ??
                                         BOOK_FALLBACK_URL,
-                                    width: 80,
-                                    fit: BoxFit.cover,
+                                    width: 70,
+                                    height: 90,
+                                    fit: BoxFit.scaleDown,
                                   ),
                                   horizontalSpaceSmall,
                                   Column(
@@ -93,12 +110,15 @@ class PostDetailsView extends StatelessWidget {
                                         book.title,
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
-                                            fontSize: 23,
-                                            fontWeight: FontWeight.w500),
+                                            fontSize: FONT_SIZE_LARGE + 2,
+                                            fontWeight: FontWeight.w400),
                                       ),
                                       if (book.author != null)
                                         Text(
                                           "Author:  ${book.author}",
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w300),
                                           textAlign: TextAlign.start,
                                         )
                                     ],

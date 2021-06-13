@@ -1,6 +1,7 @@
 import 'package:bookie/models/book.dart';
 import 'package:bookie/utils/ui_helpers.dart';
 import 'package:bookie/viewmodels/add_library_viewmodel.dart';
+import 'package:bookie/widgets/global_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
@@ -21,8 +22,8 @@ class AddLibraryView extends StatelessWidget {
                 child: Icon(Icons.save),
               )
             : null,
-        appBar: AppBar(
-          title: Text("Add Books"),
+        appBar: GlobalAppBar(
+          title: "Add Books",
         ),
         body: Column(
           children: [
@@ -110,7 +111,8 @@ class BookWidget extends ViewModelWidget<AddLibraryViewModel> {
                               : Colors.black),
                     ),
                     verticalSpaceSmall,
-                    Text("by ${book.author}" ?? "AUTHOR"),
+                    if (book.author != null)
+                      Text("by ${book.author}" ?? "AUTHOR"),
                   ],
                 ),
               ),

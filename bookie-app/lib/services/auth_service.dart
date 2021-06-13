@@ -29,19 +29,25 @@ class AuthService with ReactiveServiceMixin {
     "email": "abc@abc.com",
         "password": "abc1234",
  */
-  Future<bool> login({String email, String password}) async {
+  Future<dynamic> login({String email, String password}) async {
     try {
       final response = await _httpService.post(path: 'auth/login', body: {
         "email": email,
         "password": password,
       });
+      print('AuthService.login response is $response');
+
       if (response == null) {
-        return false;
+        return "Something went wrong";
       }
 
-      print('AuthService.login response is $response');
-      final token = response["jwtToken"] ?? null;
+      if (response["jwtToken"] == null) {
+        return response["message"] ?? "Something went wrong!";
+      }
+
+      final token = response["jwtToken"];
       _httpService.setToken(token);
+      getUserDetails();
       return true;
     } catch (e) {
       print('AuthService.login e: $e');
@@ -49,12 +55,13 @@ class AuthService with ReactiveServiceMixin {
     }
   }
 
-  Future<bool> register(
+  Future<dynamic> register(
       {String fullName,
       int age,
       String phone,
       String email,
-      String password}) async {
+      String password,
+      int addressId}) async {
     try {
       final response = await _httpService.post(path: 'auth/register', body: {
         "email": email,
@@ -62,14 +69,21 @@ class AuthService with ReactiveServiceMixin {
         "fullname": fullName,
         "age": age,
         "phone": phone,
-        "addressId": 34
+        "addressId": addressId
       });
 
-      if (response == null) {
-        return false;
-      }
       print('AuthService.register response is ${response}');
-      final token = response["loginResource"]["jwtToken"] ?? null;
+
+      if (response == null) {
+        return "Something went wrong";
+      }
+
+      if (response["loginResource"] == null ||
+          response["loginResource"]["jwtToken"] == null) {
+        return response["message"] ?? "Something went wrong!";
+      }
+
+      final token = response["loginResource"]["jwtToken"];
       _httpService.setToken(token);
 
       return true;
