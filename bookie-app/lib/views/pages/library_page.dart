@@ -39,46 +39,65 @@ class BookWidget extends ViewModelWidget<LibraryPageViewModel> {
   Widget build(BuildContext context, LibraryPageViewModel model) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      child: Row(
-        children: [
-          Image.network(
-            book.imageThumbnailLink ?? BOOK_FALLBACK_URL,
-            fit: BoxFit.cover,
-            width: 70,
-          ),
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Text(
-                    book.title ?? "TITLE",
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.black),
-                  ),
-                  if (book.author != null)
-                    Text("by ${book.author}" ?? "AUTHOR"),
-                ],
+      child: InkWell(
+        onTap: () {
+          model.updateBookStatus(book);
+        },
+        child: Row(
+          children: [
+            Image.network(
+              book.imageThumbnailLink ?? BOOK_FALLBACK_URL,
+              fit: BoxFit.cover,
+              width: 70,
+            ),
+            Expanded(
+              flex: 2,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 4),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          book.title ?? "TITLE",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black),
+                        ),
+                        horizontalSpaceTiny,
+                        Container(
+                          width: 16,
+                          height: 16,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color:
+                                  book.isAvailable ? Colors.green : Colors.red),
+                        ),
+                      ],
+                    ),
+                    if (book.author != null)
+                      Text("by ${book.author}" ?? "AUTHOR"),
+                  ],
+                ),
               ),
             ),
-          ),
-          Spacer(),
-          IconButton(
-            onPressed: () {
-              model.removeFromLibrary(book);
-            },
-            icon: Icon(
-              Icons.delete,
-              color: red,
-            ),
-          )
-        ],
+            Spacer(),
+            IconButton(
+              onPressed: () {
+                model.removeFromLibrary(book);
+              },
+              icon: Icon(
+                Icons.delete,
+                color: red,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

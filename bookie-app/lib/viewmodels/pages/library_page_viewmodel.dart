@@ -9,6 +9,7 @@ class LibraryPageViewModel extends FutureViewModel {
   final _dialogService = locator<DialogService>();
 
   List<ReactiveServiceMixin> _reactiveServices = [];
+
   List<Book> get books => _libraryService.libraryBooks;
 
   LibraryPageViewModel() {
@@ -53,5 +54,25 @@ class LibraryPageViewModel extends FutureViewModel {
     await _libraryService.removeBook(book);
     setBusy(false);
     notifyListeners();
+  }
+
+  Future<void> updateBookStatus(Book book) async {
+    /*
+    Always toggles the status:
+     */
+    final isAvailable = book.isAvailable;
+    final newType = isAvailable ? 'Unavailable' : 'Available';
+
+    final res = await _dialogService.showConfirmationDialog(
+        title: "Confirm setting this book as $newType",
+        description: "You are about to set ${book.title} as $newType",
+        barrierDismissible: true);
+    if (res.confirmed == false) {
+      return;
+    }
+    setBusy(true);
+
+    await _libraryService.updateStatus(book, newType);
+    setBusy(false);
   }
 }

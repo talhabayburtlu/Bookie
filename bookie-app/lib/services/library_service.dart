@@ -81,4 +81,16 @@ class LibraryService with ReactiveServiceMixin {
       return false;
     }
   }
+
+  Future<bool> updateStatus(Book book, String status) async {
+    try {
+      final res = await _httpService.post(
+          path: "post/status", body: {"bookId": book.id, "status": status});
+      await getOwnLibrary();
+      return true;
+    } catch (e) {
+      print('LibraryService.updateStatus e: $e');
+      return false;
+    }
+  }
 }

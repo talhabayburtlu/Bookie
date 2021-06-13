@@ -7,6 +7,7 @@ class Book {
   final String description;
   final String imageSmallThumbnailLink;
   final String imageThumbnailLink;
+  final String status; //Available | Unavailable
 
   Book(
       {this.id,
@@ -16,19 +17,12 @@ class Book {
       this.isbn,
       this.description,
       this.imageSmallThumbnailLink,
-      this.imageThumbnailLink});
+      this.imageThumbnailLink,
+      this.status});
 
-  const Book.mocked(
-      {this.id = "0",
-      this.title = "Test",
-      this.subtitle = "Test subtitle",
-      this.author = "author",
-      this.isbn = "123",
-      this.description = "description",
-      this.imageThumbnailLink =
-          "https://nalport.com/image/cache/catalog/kitap/hayvan-ciftligi-(yeni-kapak)---george-orwell-img-550x550.png",
-      this.imageSmallThumbnailLink =
-          "https://nalport.com/image/cache/catalog/kitap/hayvan-ciftligi-(yeni-kapak)---george-orwell-img-550x550.png"});
+  bool get isAvailable {
+    return this.status == "Available";
+  }
 
   static Book fromJson(Map<String, dynamic> map) {
     try {
@@ -44,7 +38,8 @@ class Book {
           isbn: map["isbn"],
           subtitle: map["subtitle"],
           imageSmallThumbnailLink: map["imageSmallThumbnailLink"],
-          imageThumbnailLink: map["imageThumbnailLink"]);
+          imageThumbnailLink: map["imageThumbnailLink"],
+          status: map["status"]);
     } catch (e) {
       print('Book.fromJson e: $e');
       return null;
