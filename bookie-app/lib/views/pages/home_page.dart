@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
             : model.data.isEmpty
                 ? Center(
                     child: Text(
-                      "No posts! ",
+                      "No posts in your City!",
                       style: TextStyle(fontSize: 28),
                     ),
                   )

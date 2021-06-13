@@ -28,10 +28,9 @@ class RegisterViewModel extends BaseViewModel {
         addressId: city.id);
 
     print('RegisterViewModel.register result is $result');
-    if (!result) {
-      _snackbarService.showSnackbar(message: "Something went wrong!");
+    if (result is String || result == false) {
+      _snackbarService.showSnackbar(message: result);
       setBusy(false);
-
       return;
     }
     _snackbarService.showSnackbar(message: "Successful!");
