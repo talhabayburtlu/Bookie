@@ -12,7 +12,6 @@ import com.swe.bookie.service.abstracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,13 +58,13 @@ public class AuthServiceImpl implements AuthService {
             // Trying to authenticate with mail and password.
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
-        } catch (BadCredentialsException e) {
-            return new LoginResource(null, "Kullanıcı adı veya şifre hatalı.");
+        } catch (Exception ex) {
+            return new LoginResource(null, "User email or password is incorrect.");
         }
 
         final UserDetails userDetails = userDetailsService.loadUserByUsername(loginDTO.getEmail()); // Loading user details.
         final String jwt = jwtTokenUtil.generateToken(userDetails); // Generating jwt token in order to send it back.
-        return new LoginResource(jwt, "Giriş yapıldı.");
+        return new LoginResource(jwt, "Login established.");
     }
 
     @Override
