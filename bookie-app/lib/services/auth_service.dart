@@ -55,7 +55,8 @@ class AuthService with ReactiveServiceMixin {
       int age,
       String phone,
       String email,
-      String password}) async {
+      String password,
+      int addressId}) async {
     try {
       final response = await _httpService.post(path: 'auth/register', body: {
         "email": email,
@@ -63,7 +64,7 @@ class AuthService with ReactiveServiceMixin {
         "fullname": fullName,
         "age": age,
         "phone": phone,
-        "addressId": 34
+        "addressId": addressId
       });
 
       if (response == null) {

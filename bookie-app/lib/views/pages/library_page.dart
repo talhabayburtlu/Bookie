@@ -13,13 +13,20 @@ class LibraryPage extends StatelessWidget {
             ? Center(
                 child: CircularProgressIndicator(),
               )
-            : ListView.separated(
-                itemCount: model.books.length,
-                separatorBuilder: (_, __) => Divider(
-                  color: Colors.grey,
-                ),
-                itemBuilder: (ctx, i) => BookWidget(book: model.books[i]),
-              ));
+            : model.books.isEmpty
+                ? Center(
+                    child: Text(
+                      "Your Library is Empty!",
+                      style: TextStyle(fontSize: 26),
+                    ),
+                  )
+                : ListView.separated(
+                    itemCount: model.books.length,
+                    separatorBuilder: (_, __) => Divider(
+                      color: Colors.grey,
+                    ),
+                    itemBuilder: (ctx, i) => BookWidget(book: model.books[i]),
+                  ));
   }
 }
 

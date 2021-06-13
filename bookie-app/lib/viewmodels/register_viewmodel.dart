@@ -1,5 +1,6 @@
 import 'package:bookie/app/locator.dart';
 import 'package:bookie/app/router.gr.dart';
+import 'package:bookie/models/city.dart';
 import 'package:bookie/services/auth_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -14,7 +15,8 @@ class RegisterViewModel extends BaseViewModel {
       int age,
       String phone,
       String email,
-      String password}) async {
+      String password,
+      City city}) async {
     setBusy(true);
 
     final result = await _authService.register(
@@ -22,7 +24,8 @@ class RegisterViewModel extends BaseViewModel {
         phone: phone,
         email: email,
         password: password,
-        age: age);
+        age: age,
+        addressId: city.id);
 
     print('RegisterViewModel.register result is $result');
     if (!result) {

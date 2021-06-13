@@ -1,3 +1,4 @@
+import 'package:bookie/models/city.dart';
 import 'package:bookie/utils/ui_helpers.dart';
 import 'package:bookie/viewmodels/register_viewmodel.dart';
 import 'package:bookie/widgets/busy_button.dart';
@@ -22,6 +23,7 @@ class _RegisterViewState extends State<RegisterView> {
   final _passwordController = TextEditingController();
 
   int _ageValue;
+  City _selectedCity;
 
   @override
   Widget build(BuildContext context) {
@@ -147,6 +149,39 @@ class _RegisterViewState extends State<RegisterView> {
                               ),
                             ),
                           ),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.grey,
+                              ),
+                              borderRadius: BorderRadius.circular(4.0),
+                            ),
+                            child: Container(
+                              padding: EdgeInsets.all(4),
+                              child: DropdownButtonFormField<City>(
+                                validator: (city) {
+                                  if (city == null) {
+                                    return "Please select your city";
+                                  }
+                                  return null;
+                                },
+                                hint: Text("Select Your City"),
+                                isExpanded: true,
+                                items: cities
+                                    .map((City city) => DropdownMenuItem<City>(
+                                          child: Text(city.name),
+                                          value: city,
+                                        ))
+                                    .toList(),
+                                onChanged: (city) {
+                                  setState(() {
+                                    _selectedCity = city;
+                                  });
+                                },
+                                value: _selectedCity,
+                              ),
+                            ),
+                          ),
                           verticalSpaceSmall,
                           BusyButton(
                             busy: model.isBusy,
@@ -157,7 +192,8 @@ class _RegisterViewState extends State<RegisterView> {
                                     password: _passwordController.text,
                                     email: _emailController.text,
                                     fullName: _nameController.text,
-                                    phone: _phoneController.text);
+                                    phone: _phoneController.text,
+                                    city: _selectedCity);
                               }
                             },
                             title: Text(

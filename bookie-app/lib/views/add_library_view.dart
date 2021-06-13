@@ -111,7 +111,8 @@ class BookWidget extends ViewModelWidget<AddLibraryViewModel> {
                               : Colors.black),
                     ),
                     verticalSpaceSmall,
-                    Text("by ${book.author}" ?? "AUTHOR"),
+                    if (book.author != null)
+                      Text("by ${book.author}" ?? "AUTHOR"),
                   ],
                 ),
               ),
