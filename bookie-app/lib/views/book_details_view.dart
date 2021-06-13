@@ -21,6 +21,15 @@ class BookDetailsView extends StatelessWidget {
         ),
         appBar: GlobalAppBar(
           title: "Book Details",
+          actions: [
+            if (model.ownLibrary)
+              IconButton(
+                icon: Icon(Icons.change_circle),
+                onPressed: () {
+                  model.updateBookStatus();
+                },
+              ),
+          ],
         ),
         body: RefreshIndicator(
           onRefresh: () async {

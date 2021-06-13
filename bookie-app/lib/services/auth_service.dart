@@ -107,6 +107,23 @@ class AuthService with ReactiveServiceMixin {
     }
   }
 
+  Future<bool> changePassword(
+      {String currentPassword, String newPassword}) async {
+    try {
+      final res = await _httpService.post(
+          path: "user/changePassword",
+          body: {"current": currentPassword, "new": newPassword});
+
+      if (res == null) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      print('AuthService.changePassword e: $e');
+      return false;
+    }
+  }
+
   Future<bool> updateUserDetails(
       {String name, String email, String phone}) async {
     try {

@@ -17,6 +17,7 @@ class PostDetailsViewModel extends BaseViewModel {
   User get user => selectedPost.user;
 
   void showBookDetails(Book book) {
+    _postService.setOwnLibrary(false);
     _postService.selectBook(book);
     _navigationService.navigateTo(Routes.bookDetailsView);
   }

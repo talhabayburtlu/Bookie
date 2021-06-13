@@ -108,9 +108,10 @@ class PostDetailsView extends StatelessWidget {
                                     children: [
                                       Text(
                                         book.title,
+                                        overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
-                                            fontSize: FONT_SIZE_LARGE + 2,
+                                            fontSize: FONT_SIZE_LARGE,
                                             fontWeight: FontWeight.w400),
                                       ),
                                       if (book.author != null)
