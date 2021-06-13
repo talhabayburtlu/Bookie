@@ -6,10 +6,7 @@ import com.swe.bookie.entity.Post;
 import com.swe.bookie.entity.User;
 import com.swe.bookie.lib.dto.CommentDTO;
 import com.swe.bookie.lib.dto.UserDTO;
-import com.swe.bookie.lib.resource.CommentResponse;
-import com.swe.bookie.lib.resource.HomepagePostResponse;
-import com.swe.bookie.lib.resource.RestrictedUserResource;
-import com.swe.bookie.lib.resource.UserResource;
+import com.swe.bookie.lib.resource.*;
 import com.swe.bookie.mapper.CommentMapper;
 import com.swe.bookie.mapper.UserMapper;
 import com.swe.bookie.service.abstracts.AuthService;
@@ -59,8 +56,8 @@ public class UserController {
     }
 
     @GetMapping("/getBooks")
-    List<Book> getBooks(){
-        return userService.getUserBooksByUserId(authService.getAuthenticatedUser().getId());
+    public List<PostBookResponse> getBooks() {
+        return userService.getUserPostBookResponsesByUserId(authService.getAuthenticatedUser().getId());
     }
 
     @PostMapping("/toComment")

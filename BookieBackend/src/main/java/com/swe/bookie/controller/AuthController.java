@@ -18,7 +18,6 @@ public class AuthController {
 
     private final AuthService authService;
 
-
     @Autowired
     public AuthController(AuthService authService) {
         this.authService = authService;
@@ -33,17 +32,17 @@ public class AuthController {
     public RegisterResource register(@RequestBody UserDTO userDTO) {
         UserResource userResource = null;
         LoginResource loginResource = null;
-        String message = "Kayıt olundu.";
+        String message = "You are registered.";
         try {
             userResource = this.authService.register(userDTO);
             loginResource = this.authService.login(new LoginDTO(userDTO.getEmail(), userDTO.getPassword()));
         } catch (Exception e) {
             if (e.getLocalizedMessage().contains("uq_user_mail"))
-                message = "Bu email başka bir kullanıcı tarafından kullanılıyor.";
+                message = "This email is used by another user.";
             else if (e.getLocalizedMessage().contains("uq_phone"))
-                message = "Bu telefon başka bir kullanıcı tarafından kullanılıyor.";
+                message = "This phone number is used by another user.";
             else
-                message = "Beklenmedik bir hata oluştu.";
+                message = "Unexpected error occurred.";
         }
         return new RegisterResource(userResource, loginResource, message);
     }

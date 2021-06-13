@@ -93,10 +93,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<PostBookResponse> getUserPostBookResponsesByUserId(int userId) {
+        List<Book> books = postService.getBooksByUserId(userId);
+
+        List<PostBookResponse> postBookResponses = books.stream().map(book -> {
+            Post post = postService.getByUserIdAndBookId(userId, book.getId());
+            return postBookMapper.toResource(book, post.getStatus());
+        }).collect(Collectors.toList());
+
+        return postBookResponses;
+    }
+
+    @Override
     public List<Book> getUserBooksByUserId(int userId) {
         return postService.getBooksByUserId(userId);
     }
-
 
     @Override
     public Comment toComment(int userId, int ownerId, String bookId, String description) {

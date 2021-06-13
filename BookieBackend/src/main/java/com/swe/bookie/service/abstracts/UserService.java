@@ -3,6 +3,7 @@ package com.swe.bookie.service.abstracts;
 import com.swe.bookie.entity.*;
 import com.swe.bookie.lib.dto.UserDTO;
 import com.swe.bookie.lib.resource.HomepagePostResponse;
+import com.swe.bookie.lib.resource.PostBookResponse;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface UserService {
     Post addBookToUser(String bookId, User user);
 
     Post removeBookFromUser(String bookId, User user);
+
+    List<PostBookResponse> getUserPostBookResponsesByUserId(int userId);
 
     List<Book> getUserBooksByUserId(int userId);
 
