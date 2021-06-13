@@ -74,6 +74,12 @@ class ProfilePage extends StatelessWidget {
                     child: Text("Update Profile"),
                   ),
                   RaisedButton(
+                    onPressed: () {
+                      model.changePassword();
+                    },
+                    child: Text("Change Password"),
+                  ),
+                  RaisedButton(
                     child: Text("Log out"),
                     onPressed: () {
                       model.logout();
