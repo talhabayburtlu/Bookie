@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +31,7 @@ public class PostController {
     }
 
     @PostMapping("/status")
-    public Post updatePostStatus(@RequestBody PostStatusUpdateDTO postStatusUpdateDTO) throws IOException, URISyntaxException {
+    public Post updatePostStatus(@RequestBody PostStatusUpdateDTO postStatusUpdateDTO) throws Exception {
         org.springframework.security.core.userdetails.User securityUser = // Getting authenticated user details.
                 (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findByEmail(securityUser.getUsername()); // Getting authenticated user by using user details.
