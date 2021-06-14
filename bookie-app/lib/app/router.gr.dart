@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../views/add_library_view.dart';
 import '../views/book_details_view.dart';
+import '../views/change_password_view.dart';
 import '../views/home_view.dart';
 import '../views/login_view.dart';
 import '../views/post_details_view.dart';
@@ -27,6 +28,7 @@ class Routes {
   static const String updateDetailsView = '/update-details-view';
   static const String postDetailsView = '/post-details-view';
   static const String bookDetailsView = '/book-details-view';
+  static const String changePasswordView = '/change-password-view';
   static const all = <String>{
     splashView,
     homeView,
@@ -36,6 +38,7 @@ class Routes {
     updateDetailsView,
     postDetailsView,
     bookDetailsView,
+    changePasswordView,
   };
 }
 
@@ -51,6 +54,7 @@ class Router extends RouterBase {
     RouteDef(Routes.updateDetailsView, page: UpdateDetailsView),
     RouteDef(Routes.postDetailsView, page: PostDetailsView),
     RouteDef(Routes.bookDetailsView, page: BookDetailsView),
+    RouteDef(Routes.changePasswordView, page: ChangePasswordView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -100,6 +104,12 @@ class Router extends RouterBase {
     BookDetailsView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => BookDetailsView(),
+        settings: data,
+      );
+    },
+    ChangePasswordView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ChangePasswordView(),
         settings: data,
       );
     },

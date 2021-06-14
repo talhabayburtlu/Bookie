@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 
 class BookDetailsView extends StatelessWidget {
   final rowAlignment = MainAxisAlignment.start;
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<BookDetailsViewModel>.reactive(
@@ -103,6 +104,21 @@ class BookDetailsView extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           )
+                        ],
+                      ),
+                    if (model.selectedBook.status != null)
+                      Row(
+                        children: [
+                          Text(
+                            "Status: ",
+                            style: TextStyle(
+                                fontSize: FONT_SIZE_MEDIUM,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            model.selectedBook.status,
+                            style: TextStyle(fontSize: FONT_SIZE_MEDIUM),
+                          ),
                         ],
                       ),
                     verticalSpaceMedium,

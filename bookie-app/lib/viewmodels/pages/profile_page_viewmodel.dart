@@ -54,4 +54,8 @@ class ProfilePageViewModel extends FutureViewModel<User> {
   void updateProfile() {
     _navigationService.navigateTo(Routes.updateDetailsView);
   }
+
+  void changePassword() {
+    _navigationService.navigateTo(Routes.changePasswordView);
+  }
 }
