@@ -2,6 +2,7 @@ package com.swe.bookie.config.security;
 
 import com.swe.bookie.entity.User;
 import com.swe.bookie.service.abstracts.UserService;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userService = userService;
     }
 
+    @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = userService.findByEmail(email);

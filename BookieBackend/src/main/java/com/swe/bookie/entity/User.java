@@ -20,6 +20,9 @@ public class User {
     private String password;
     private String phone;
 
+    @Column(name = "verified")
+    private Boolean verified;
+
     @ManyToOne
     @JoinColumn(name = "address_id", nullable = false)
     private Address address;
@@ -29,4 +32,6 @@ public class User {
 
     @OneToMany(mappedBy = "userId")
     private List<Post> posts;
+
+
 }
