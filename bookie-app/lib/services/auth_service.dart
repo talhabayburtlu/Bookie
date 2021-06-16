@@ -9,6 +9,8 @@ import 'package:observable_ish/observable_ish.dart';
 class AuthService with ReactiveServiceMixin {
   final _httpService = locator<HttpService>();
 
+  String email;
+
   AuthService() {
     listenToReactiveValues([_user]);
   }
@@ -78,13 +80,11 @@ class AuthService with ReactiveServiceMixin {
         return "Something went wrong";
       }
 
-      if (response["loginResource"] == null ||
-          response["loginResource"]["jwtToken"] == null) {
-        return response["message"] ?? "Something went wrong!";
+      if (response["loginResource"] == null) {
+        return response["message"];
       }
 
-      final token = response["loginResource"]["jwtToken"];
-      _httpService.setToken(token);
+      this.email = email;
 
       return true;
     } catch (e) {
@@ -111,9 +111,10 @@ class AuthService with ReactiveServiceMixin {
       {String currentPassword, String newPassword}) async {
     try {
       final res = await _httpService.post(
-          path: "user/changePassword",
-          body: {"current": currentPassword, "new": newPassword});
+          path: "user/changePass",
+          body: {"currentPass": currentPassword, "newPass": newPassword});
 
+      print('AuthService.changePassword res: $res');
       if (res == null) {
         return false;
       }
@@ -139,6 +140,30 @@ class AuthService with ReactiveServiceMixin {
       return true;
     } catch (e) {
       print('AuthService.updateUserDetails e: $e');
+      return false;
+    }
+  }
+
+  Future<dynamic> sendVerificationCode({String email, String token}) async {
+    try {
+      final res = await _httpService
+          .post(path: "auth/verify", body: {"email": email, "token": token});
+
+      print('AuthService.sendVerificationCode res: $res');
+
+      if (res == null || res["successfull"] == null) {
+        return false;
+      }
+
+      final success = res["successfull"];
+
+      if (success == false) {
+        return res["message"];
+      }
+
+      return true;
+    } catch (e) {
+      print('AuthService.sendVerificationCode e: $e');
       return false;
     }
   }

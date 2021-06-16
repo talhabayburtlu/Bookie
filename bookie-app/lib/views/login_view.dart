@@ -8,8 +8,8 @@ import 'package:stacked/stacked.dart';
 class LoginView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailController = TextEditingController(text: "ahmet@ahmet.com");
-  final _passwordController = TextEditingController(text: "abc1234");
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -87,9 +87,25 @@ class LoginView extends StatelessWidget {
                         ),
                         verticalSpaceMedium,
                         FlatButton(
-                          child: Text("New here? Register!"),
+                          child: Text.rich(
+                            TextSpan(text: "New here? ", children: [
+                              TextSpan(
+                                  text: "Register!",
+                                  style: TextStyle(color: Colors.amber[800])),
+                            ]),
+                          ),
                           onPressed: () {
                             model.register();
+                          },
+                        ),
+                        verticalSpaceSmall,
+                        FlatButton(
+                          child: Text(
+                            "Enter your verification token!",
+                            style: TextStyle(color: Colors.grey),
+                          ),
+                          onPressed: () {
+                            model.verificationPage();
                           },
                         ),
                       ],

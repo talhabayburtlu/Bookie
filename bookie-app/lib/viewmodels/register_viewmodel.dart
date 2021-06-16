@@ -33,8 +33,9 @@ class RegisterViewModel extends BaseViewModel {
       setBusy(false);
       return;
     }
-    _snackbarService.showSnackbar(message: "Successful!");
-    _navigationService.clearStackAndShow(Routes.homeView);
+    _snackbarService.showSnackbar(
+        message: "Successful! You need to verify your email");
+    _navigationService.navigateTo(Routes.verificationView);
     setBusy(false);
   }
 }

@@ -18,6 +18,7 @@ import '../views/post_details_view.dart';
 import '../views/register_view.dart';
 import '../views/splash_view.dart';
 import '../views/update_details_view.dart';
+import '../views/verification_view.dart';
 
 class Routes {
   static const String splashView = '/';
@@ -29,6 +30,7 @@ class Routes {
   static const String postDetailsView = '/post-details-view';
   static const String bookDetailsView = '/book-details-view';
   static const String changePasswordView = '/change-password-view';
+  static const String verificationView = '/verification-view';
   static const all = <String>{
     splashView,
     homeView,
@@ -39,6 +41,7 @@ class Routes {
     postDetailsView,
     bookDetailsView,
     changePasswordView,
+    verificationView,
   };
 }
 
@@ -55,6 +58,7 @@ class Router extends RouterBase {
     RouteDef(Routes.postDetailsView, page: PostDetailsView),
     RouteDef(Routes.bookDetailsView, page: BookDetailsView),
     RouteDef(Routes.changePasswordView, page: ChangePasswordView),
+    RouteDef(Routes.verificationView, page: VerificationView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -110,6 +114,12 @@ class Router extends RouterBase {
     ChangePasswordView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => ChangePasswordView(),
+        settings: data,
+      );
+    },
+    VerificationView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => VerificationView(),
         settings: data,
       );
     },

@@ -25,4 +25,8 @@ class LoginViewModel extends BaseViewModel {
   void register() {
     _navigationService.navigateTo(Routes.registerView);
   }
+
+  void verificationPage() {
+    _navigationService.navigateTo(Routes.verificationView);
+  }
 }

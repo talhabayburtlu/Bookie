@@ -77,11 +77,14 @@ class PostService {
 
   Future<bool> addComment(String content) async {
     try {
+      print(
+          "ownerId:${_ownLibrary ? _authService.user.id : _selectedPost.user.id} | bookId: ${_selectedBook.id} ");
       final res = await _httpService.post(path: "user/toComment", body: {
         'ownerId': _ownLibrary ? _authService.user.id : _selectedPost.user.id,
         'bookId': _selectedBook.id,
         'content': content
       });
+      print('PostService.addComment res: $res');
       if (res == null) {
         return false;
       }

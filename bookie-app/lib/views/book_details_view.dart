@@ -59,27 +59,32 @@ class BookDetailsView extends StatelessWidget {
                               fontSize: FONT_SIZE_MEDIUM,
                               fontWeight: FontWeight.bold),
                         ),
-                        Text(
-                          "${model.selectedBook.title}",
-                          style: TextStyle(
-                            fontSize: FONT_SIZE_MEDIUM,
+                        Flexible(
+                          child: Text(
+                            "${model.selectedBook.title}",
+                            style: TextStyle(
+                              fontSize: FONT_SIZE_MEDIUM,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    Row(
-                      mainAxisAlignment: rowAlignment,
-                      children: [
-                        Text("Author: ",
-                            style: TextStyle(
-                                fontSize: FONT_SIZE_MEDIUM,
-                                fontWeight: FontWeight.bold)),
-                        Text("${model.selectedBook.author}",
-                            style: TextStyle(
-                              fontSize: FONT_SIZE_MEDIUM,
-                            ))
-                      ],
-                    ),
+                    if (model.selectedBook.author != null)
+                      Row(
+                        mainAxisAlignment: rowAlignment,
+                        children: [
+                          Text("Author: ",
+                              style: TextStyle(
+                                  fontSize: FONT_SIZE_MEDIUM,
+                                  fontWeight: FontWeight.bold)),
+                          Flexible(
+                            child: Text("${model.selectedBook.author}",
+                                style: TextStyle(
+                                  fontSize: FONT_SIZE_MEDIUM,
+                                )),
+                          )
+                        ],
+                      ),
                     if (model.selectedBook.subtitle != null)
                       Row(
                         mainAxisAlignment: rowAlignment,
@@ -88,9 +93,11 @@ class BookDetailsView extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: FONT_SIZE_MEDIUM,
                                   fontWeight: FontWeight.bold)),
-                          Text(
-                            "${model.selectedBook.subtitle}",
-                            style: TextStyle(fontSize: FONT_SIZE_MEDIUM),
+                          Flexible(
+                            child: Text(
+                              "${model.selectedBook.subtitle}",
+                              style: TextStyle(fontSize: FONT_SIZE_MEDIUM),
+                            ),
                           )
                         ],
                       ),

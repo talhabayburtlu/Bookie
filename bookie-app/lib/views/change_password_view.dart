@@ -24,6 +24,9 @@ class ChangePasswordView extends StatelessWidget {
                         if (_formKey.currentState.validate() == false) {
                           return;
                         }
+                        await model.changePassword(
+                            currentPassword: _currentController.text,
+                            newPassword: _newController.text);
                       },
               ),
               appBar: GlobalAppBar(
@@ -32,7 +35,8 @@ class ChangePasswordView extends StatelessWidget {
               body: model.isBusy
                   ? CircularProgressIndicator()
                   : Container(
-                      padding: EdgeInsets.all(8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -58,6 +62,10 @@ class ChangePasswordView extends StatelessWidget {
                                   ),
                                 ),
                               ],
+                            ),
+                            verticalSpaceMedium,
+                            Divider(
+                              color: Colors.grey,
                             ),
                             Row(
                               children: [

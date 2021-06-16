@@ -18,6 +18,7 @@ class ChangePasswordViewModel extends BaseViewModel {
       _snackbarService.showSnackbar(message: "Something went wrong!");
     } else {
       _navigationService.back();
+      _snackbarService.showSnackbar(message: "Password Updated!");
     }
     setBusy(false);
   }
