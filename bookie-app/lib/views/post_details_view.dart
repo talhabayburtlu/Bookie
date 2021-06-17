@@ -49,6 +49,7 @@ class PostDetailsView extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(4),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 verticalSpaceSmall,
                 Row(
@@ -80,18 +81,21 @@ class PostDetailsView extends StatelessWidget {
                   ),
                 ),
                 verticalSpaceSmall,
-                ...model.selectedPost.books
-                    .map((Book book) => Container(
-                          decoration: BoxDecoration(
-                              border: Border(
-                                  bottom: BorderSide(color: Colors.grey))),
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 4, vertical: 6),
-                          child: InkWell(
-                            onTap: () {
-                              model.showBookDetails(book);
-                            },
-                            child: Container(
+                ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (ctx, i) {
+                      final book = model.selectedPost.books[i];
+                      return Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 4, vertical: 6),
+                        child: InkWell(
+                          onTap: () {
+                            model.showBookDetails(book);
+                          },
+                          child: Container(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
                               child: Row(
                                 children: [
                                   Image.network(
@@ -108,9 +112,10 @@ class PostDetailsView extends StatelessWidget {
                                     children: [
                                       Text(
                                         book.title,
+                                        overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.start,
                                         style: TextStyle(
-                                            fontSize: FONT_SIZE_LARGE + 2,
+                                            fontSize: FONT_SIZE_LARGE,
                                             fontWeight: FontWeight.w400),
                                       ),
                                       if (book.author != null)
@@ -127,8 +132,13 @@ class PostDetailsView extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ))
-                    .toList(),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (_, __) => Divider(
+                          color: Colors.grey,
+                        ),
+                    itemCount: model.selectedPost.books.length)
               ],
             ),
           ),

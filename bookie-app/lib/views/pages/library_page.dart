@@ -41,7 +41,7 @@ class BookWidget extends ViewModelWidget<LibraryPageViewModel> {
       padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
       child: InkWell(
         onTap: () {
-          model.updateBookStatus(book);
+          model.showBookDetails(book);
         },
         child: Row(
           children: [
@@ -60,14 +60,16 @@ class BookWidget extends ViewModelWidget<LibraryPageViewModel> {
                   children: [
                     Row(
                       children: [
-                        Text(
-                          book.title ?? "TITLE",
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black),
+                        Flexible(
+                          child: Text(
+                            book.title ?? "",
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                          ),
                         ),
                         horizontalSpaceTiny,
                         Container(

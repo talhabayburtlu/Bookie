@@ -8,6 +8,7 @@ import 'package:bookie/views/post_details_view.dart';
 import 'package:bookie/views/register_view.dart';
 import 'package:bookie/views/splash_view.dart';
 import 'package:bookie/views/update_details_view.dart';
+import 'package:bookie/views/verification_view.dart';
 
 @MaterialAutoRouter(routes: [
   MaterialRoute(
@@ -37,6 +38,9 @@ import 'package:bookie/views/update_details_view.dart';
   ),
   MaterialRoute(
     page: ChangePasswordView,
+  ),
+  MaterialRoute(
+    page: VerificationView,
   ),
 ])
 class $Router {}

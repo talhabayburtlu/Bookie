@@ -1,12 +1,16 @@
 import 'package:bookie/app/locator.dart';
+import 'package:bookie/app/router.gr.dart';
 import 'package:bookie/models/book.dart';
 import 'package:bookie/services/library_service.dart';
+import 'package:bookie/services/post_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class LibraryPageViewModel extends FutureViewModel {
   final _libraryService = locator<LibraryService>();
   final _dialogService = locator<DialogService>();
+  final _navigationService = locator<NavigationService>();
+  final _postService = locator<PostService>();
 
   List<ReactiveServiceMixin> _reactiveServices = [];
 
@@ -56,23 +60,9 @@ class LibraryPageViewModel extends FutureViewModel {
     notifyListeners();
   }
 
-  Future<void> updateBookStatus(Book book) async {
-    /*
-    Always toggles the status:
-     */
-    final isAvailable = book.isAvailable;
-    final newType = isAvailable ? 'Unavailable' : 'Available';
-
-    final res = await _dialogService.showConfirmationDialog(
-        title: "Confirm setting this book as $newType",
-        description: "You are about to set ${book.title} as $newType",
-        barrierDismissible: true);
-    if (res.confirmed == false) {
-      return;
-    }
-    setBusy(true);
-
-    await _libraryService.updateStatus(book, newType);
-    setBusy(false);
+  void showBookDetails(Book book) {
+    _postService.setOwnLibrary(true);
+    _postService.selectBook(book);
+    _navigationService.navigateTo(Routes.bookDetailsView);
   }
 }
