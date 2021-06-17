@@ -61,6 +61,11 @@ public class UserController {
         return userService.getUserPostBookResponsesByUserId(authService.getAuthenticatedUser().getId());
     }
 
+    @GetMapping("/getBooks/{userId}")
+    public List<PostBookResponse> getLibraryByUserId(@PathVariable int userId) {
+        return userService.getUserPostBookResponsesByUserId(userId);
+    }
+
     @PostMapping("/toComment")
     CommentResponse toComment(@RequestBody CommentDTO commentDTO) {
         Comment comment = userService.toComment(authService.getAuthenticatedUser().getId(), commentDTO.getOwnerId(), commentDTO.getBookId(), commentDTO.getContent());
@@ -105,5 +110,6 @@ public class UserController {
     public User changePass(@RequestBody PasswordDTO passwordDTO) {
         return userService.changePass(passwordDTO, authService.getAuthenticatedUser().getId());
     }
+
 
 }
