@@ -108,7 +108,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<PostBookResponse> getUserPostBookResponsesByUserId(int userId) {
+    public HomepagePostResponse getUserPostBookResponsesByUserId(int userId) {
         List<Book> books = postService.getBooksByUserId(userId);
 
         List<PostBookResponse> postBookResponses = books.stream().map(book -> {
@@ -116,7 +116,13 @@ public class UserServiceImpl implements UserService {
             return postBookMapper.toResource(book, post.getStatus());
         }).collect(Collectors.toList());
 
-        return postBookResponses;
+        RestrictedUserResource restrictedUserResource = userMapper.toRestrictedResource(userRepository.getById(userId));
+
+        HomepagePostResponse homepagePostResponse = new HomepagePostResponse();
+        homepagePostResponse.setBooks(postBookResponses);
+        homepagePostResponse.setRestrictedUserResource(restrictedUserResource);
+
+        return homepagePostResponse;
     }
 
     @Override

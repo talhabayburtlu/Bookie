@@ -58,11 +58,11 @@ public class UserController {
 
     @GetMapping("/getBooks")
     public List<PostBookResponse> getBooks() {
-        return userService.getUserPostBookResponsesByUserId(authService.getAuthenticatedUser().getId());
+        return userService.getUserPostBookResponsesByUserId(authService.getAuthenticatedUser().getId()).getBooks();
     }
 
     @GetMapping("/getBooks/{userId}")
-    public List<PostBookResponse> getLibraryByUserId(@PathVariable int userId) {
+    public HomepagePostResponse getLibraryByUserId(@PathVariable int userId) {
         return userService.getUserPostBookResponsesByUserId(userId);
     }
 
