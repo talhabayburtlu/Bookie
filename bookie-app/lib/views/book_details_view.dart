@@ -170,36 +170,41 @@ class BookDetailsView extends StatelessWidget {
   }
 }
 
-class CommentWidget extends StatelessWidget {
+class CommentWidget extends ViewModelWidget<BookDetailsViewModel> {
   final Comment comment;
 
   const CommentWidget({Key key, this.comment}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, BookDetailsViewModel model) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                comment.senderName,
-                style: TextStyle(color: Colors.black, fontSize: 16),
-              ),
-              Text(
-                comment.formattedDate,
-                style: TextStyle(color: Colors.grey, fontSize: 16),
-              )
-            ],
-          ),
-          verticalSpaceSmall,
-          Text(
-            comment.description,
-            style: TextStyle(color: Colors.black, fontSize: 16),
-          )
-        ],
+      child: InkWell(
+        onTap: () {
+          model.openUserLibrary(comment.senderId);
+        },
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  comment.senderName,
+                  style: TextStyle(color: Colors.black, fontSize: 16),
+                ),
+                Text(
+                  comment.formattedDate,
+                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                )
+              ],
+            ),
+            verticalSpaceSmall,
+            Text(
+              comment.description,
+              style: TextStyle(color: Colors.black, fontSize: 16),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -94,4 +94,19 @@ class PostService {
       return false;
     }
   }
+
+  Future<bool> getUserPostById(int userId) async {
+    try {
+      final res = await _httpService.get(path: "user/getBooks/$userId");
+      print('PostService.getUserPostById res: $res');
+      if (res == null) {
+        return false;
+      }
+      _selectedPost = Post.fromJson(res);
+      return true;
+    } catch (e) {
+      print('PostService.addComment e: $e');
+      return false;
+    }
+  }
 }

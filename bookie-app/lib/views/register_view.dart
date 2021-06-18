@@ -63,7 +63,7 @@ class _RegisterViewState extends State<RegisterView> {
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: "Eposta"),
+                                labelText: "Email"),
                             controller: _emailController,
                             validator: (val) {
                               if (val.isEmpty) {
@@ -79,7 +79,7 @@ class _RegisterViewState extends State<RegisterView> {
                           TextFormField(
                             decoration: InputDecoration(
                                 border: OutlineInputBorder(),
-                                labelText: "Şifre"),
+                                labelText: "Password"),
                             controller: _passwordController,
                             obscureText: true,
                             validator: (val) {

@@ -1,4 +1,5 @@
 import 'package:bookie/app/locator.dart';
+import 'package:bookie/app/router.gr.dart';
 import 'package:bookie/models/book.dart';
 import 'package:bookie/models/comment.dart';
 import 'package:bookie/services/auth_service.dart';
@@ -118,5 +119,13 @@ class BookDetailsViewModel extends FutureViewModel<List<Comment>> {
     comments = await _postService.fetchCommentsForPost();
     print('BookDetailsViewModel.refresh comments has len ${comments.length}');
     notifyListeners();
+  }
+
+  Future<void> openUserLibrary(int senderId) async {
+    final success = await _postService.getUserPostById(senderId);
+
+    if (success) {
+      _navigationService.navigateTo(Routes.postDetailsView);
+    }
   }
 }

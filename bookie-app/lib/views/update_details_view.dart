@@ -5,7 +5,6 @@ import 'package:stacked/stacked.dart';
 
 class UpdateDetailsView extends StatelessWidget {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -24,7 +23,6 @@ class UpdateDetailsView extends StatelessWidget {
                         }
                         await model.validateInputsAndUpdate(
                             name: _nameController.text,
-                            email: _emailController.text,
                             phone: _phoneController.text);
                       },
               ),
@@ -52,24 +50,6 @@ class UpdateDetailsView extends StatelessWidget {
                                     },
                                     controller: _nameController
                                       ..text = model.user.name,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text("Email: "),
-                                Expanded(
-                                  child: TextFormField(
-                                    keyboardType: TextInputType.emailAddress,
-                                    validator: (val) {
-                                      if (val.isEmpty) {
-                                        return "Email can not be empty";
-                                      }
-                                      return null;
-                                    },
-                                    controller: _emailController
-                                      ..text = model.user.email,
                                   ),
                                 ),
                               ],

@@ -125,18 +125,16 @@ class AuthService with ReactiveServiceMixin {
     }
   }
 
-  Future<bool> updateUserDetails(
-      {String name, String email, String phone}) async {
+  Future<bool> updateUserDetails({String name, String phone}) async {
     try {
       final res = await _httpService.put(path: "user/me", body: {
         'fullname': name,
-        'email': email,
         'phone': phone,
       });
       if (res == null) {
         return false;
       }
-      updateUser(user.copyWith(name: name, email: email, phone: phone));
+      updateUser(user.copyWith(name: name, phone: phone));
       return true;
     } catch (e) {
       print('AuthService.updateUserDetails e: $e');

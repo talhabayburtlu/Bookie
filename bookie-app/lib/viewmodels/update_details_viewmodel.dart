@@ -19,15 +19,14 @@ class UpdateDetailsViewModel extends FutureViewModel<User> {
     return _user;
   }
 
-  Future<void> validateInputsAndUpdate(
-      {String name, String email, String phone}) async {
-    if (name.isEmpty || email.isEmpty || phone.isEmpty) {
+  Future<void> validateInputsAndUpdate({String name, String phone}) async {
+    if (name.isEmpty || phone.isEmpty) {
       return;
     }
     setBusy(true);
 
-    final success = await _authService.updateUserDetails(
-        name: name, phone: phone, email: email);
+    final success =
+        await _authService.updateUserDetails(name: name, phone: phone);
     if (success) {
       _navigationService.back();
       _snackbarService.showSnackbar(message: "Successful !");

@@ -8,8 +8,8 @@ import 'package:stacked/stacked.dart';
 class LoginView extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _emailController = TextEditingController(text: "ahmet@finfree.co");
+  final _passwordController = TextEditingController(text: "ahmet123");
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,7 @@ class LoginView extends StatelessWidget {
                       children: [
                         TextFormField(
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Eposta"),
+                              border: OutlineInputBorder(), labelText: "Email"),
                           keyboardType: TextInputType.emailAddress,
                           controller: _emailController,
                           validator: (val) {
@@ -55,7 +54,8 @@ class LoginView extends StatelessWidget {
                         TextFormField(
                           obscureText: true,
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(), labelText: "Şifre"),
+                              border: OutlineInputBorder(),
+                              labelText: "Password"),
                           controller: _passwordController,
                           validator: (val) {
                             if (val.isEmpty) {
