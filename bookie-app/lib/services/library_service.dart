@@ -48,7 +48,9 @@ class LibraryService with ReactiveServiceMixin {
       List<Book> books = [];
       print('LibraryService.searchBooks res: $res');
       res.forEach((book) {
-        books.add(Book.fromJson(book));
+        if (book != null) {
+          books.add(Book.fromJson(book));
+        }
       });
       return books;
     } catch (e) {

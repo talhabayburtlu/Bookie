@@ -124,12 +124,14 @@ class VerificationView extends StatelessWidget {
                             color: Colors.white, fontSize: FONT_SIZE_LARGE),
                       ),
                       color: Colors.green,
-                      onPressed: () async {
-                        if (_formKey.currentState.validate() == false) {
-                          return;
-                        }
-                        await model.verify(_emailController.text);
-                      },
+                      onPressed: model.isBusy
+                          ? null
+                          : () async {
+                              if (_formKey.currentState.validate() == false) {
+                                return;
+                              }
+                              await model.verify(_emailController.text);
+                            },
                     ),
                   ),
                 ],

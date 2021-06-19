@@ -106,6 +106,9 @@ class _RegisterViewState extends State<RegisterView> {
                               if (val.isEmpty) {
                                 return "Please enter your phone number";
                               }
+                              if (val.length < 11) {
+                                return "Please enter a correct phone number";
+                              }
                               return null;
                             },
                           ),

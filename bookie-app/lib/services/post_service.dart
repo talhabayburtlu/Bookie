@@ -64,6 +64,8 @@ class PostService {
           queryParams: "?userId=$userId&bookId=$bookId");
       List<Comment> comments = [];
 
+      print('PostService.fetchCommentsForPost res: $res');
+
       res.forEach((c) {
         comments.add(Comment.fromJson(c));
       });

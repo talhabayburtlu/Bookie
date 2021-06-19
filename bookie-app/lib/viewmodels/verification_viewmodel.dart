@@ -28,6 +28,7 @@ class VerificationViewModel extends BaseViewModel {
       _snackbarService.showSnackbar(message: "Your code is too short!");
       return;
     }
+    setBusy(true);
     final result =
         await _authService.sendVerificationCode(token: code, email: email);
 
@@ -38,5 +39,6 @@ class VerificationViewModel extends BaseViewModel {
       _snackbarService.showSnackbar(
           message: "Verification has been completed! You can Login ");
     }
+    setBusy(false);
   }
 }
